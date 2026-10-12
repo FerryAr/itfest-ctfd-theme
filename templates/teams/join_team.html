@@ -1,37 +1,44 @@
 {% extends "base.html" %}
 
 {% block content %}
-  <div class="jumbotron">
-    <div class="container">
-      <h1>{% trans %}Join Team{% endtrans %}</h1>
-    </div>
-  </div>
+<div class="center-content-wrapper">
   <div class="container">
-    <div class="row">
-      <div class="col-md-8 col-lg-6 offset-md-2 offset-lg-3">
-        {% include "components/errors.html" %}
+    <div class="row justify-content-center">
+      <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-5">
+        
+        <div class="card p-4 p-md-5 shadow-sm">
+          <div class="text-center mb-4">
+            <h1 class="h3 fw-bold mb-2">{% trans %}Join Team{% endtrans %}</h1>
+            <p class="text-muted small mb-0">{% trans %}Enter the team name and password to join{% endtrans %}</p>
+          </div>
 
-        {% with form = Forms.teams.TeamJoinForm() %}
-          <form method="POST">
-            <div class="mb-3">
-              {{ form.name.label(class="form-label") }}
-              {{ form.name(class="form-control") }}
-            </div>
+          {% include "components/errors.html" %}
 
-            <div class="mb-3">
-              {{ form.password.label(class="form-label") }}
-              {{ form.password(class="form-control") }}
-            </div>
-
-            <div class="row pt-3">
-              <div class="col-md-12">
-                {{ form.submit(class="btn btn-success float-end px-4") }}
+          {% with form = Forms.teams.TeamJoinForm() %}
+            <form method="POST">
+              <div class="mb-3">
+                <label class="form-label auth-label">{{ form.name.label.text }}</label>
+                {{ form.name(class="form-control auth-input", placeholder="Team name") }}
               </div>
-            </div>
-            {{ form.nonce() }}
-          </form>
-        {% endwith %}
+
+              <div class="mb-4">
+                <label class="form-label auth-label">{{ form.password.label.text }}</label>
+                {{ form.password(class="form-control auth-input", placeholder="Team password") }}
+              </div>
+
+              <div class="d-flex gap-2">
+                <a class="btn btn-outline-secondary w-50 py-2" href="{{ url_for('teams.private') }}">
+                  {% trans %}Back{% endtrans %}
+                </a>
+                {{ form.submit(class="btn btn-primary w-50 py-2", value="Join Team") }}
+              </div>
+              {{ form.nonce() }}
+            </form>
+          {% endwith %}
+        </div>
+
       </div>
     </div>
   </div>
+</div>
 {% endblock %}
