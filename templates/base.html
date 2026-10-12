@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   <title>{{ title or Configs.ctf_name }}</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,6 +13,7 @@
 
   {% block stylesheets %}
     {{ Assets.css("assets/scss/main.scss") }}
+    <link rel="stylesheet" href="{{ url_for('views.themes_beta', theme='itfest-theme', path='css/apple-refined.css') }}">
   {% endblock %}
 
   {{ Plugins.styles }}
@@ -38,6 +42,157 @@
   </script>
 
   {{ Configs.theme_header }}
+
+  <style>
+    /* ==============================================================================
+       LUMINOUS APPLE PEARL & EMERALD (SEAMLESS, ADAPTIVE & ZERO MUDDY CONTRAST)
+       ============================================================================== */
+    html {
+      height: 100% !important;
+    }
+
+    body {
+      min-height: 100vh !important;
+      display: flex !important;
+      flex-direction: column !important;
+      margin: 0 !important;
+      padding-top: 68px !important;
+      background-color: #fafafc !important; /* LUMINOUS PEARL CANVAS */
+      background-image: none !important;
+    }
+
+    /* 1. SOLID WHITE NAVBAR WITH 2PX EMERALD ACCENT */
+    nav.navbar, .navbar {
+      position: fixed !important;
+      top: 0 !important;
+      left: 0 !important;
+      right: 0 !important;
+      width: 100% !important;
+      height: 68px !important;
+      min-height: 68px !important;
+      background-color: #ffffff !important;
+      background-image: none !important;
+      backdrop-filter: none !important;
+      -webkit-backdrop-filter: none !important;
+      border-bottom: 2px solid #33D17A !important;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03) !important;
+      z-index: 1030 !important;
+    }
+
+    .navbar-brand {
+      color: #1d1d1f !important;
+      font-weight: 700 !important;
+      font-size: 17px !important;
+    }
+
+    .navbar-brand::after {
+      content: none !important;
+      display: none !important;
+    }
+
+    /* 2. MAIN CONTAINER WITH WHISPER-SOFT AMBIENT PEARL BLOOM */
+    main[role="main"] {
+      flex: 1 0 auto !important;
+      width: 100% !important;
+      background-color: #fafafc !important;
+      background-image: radial-gradient(ellipse 70% 35% at 50% 0%, rgba(51, 209, 122, 0.045) 0%, transparent 80%) !important;
+      background-attachment: fixed !important;
+      padding-bottom: 40px !important;
+    }
+
+    /* 3. HEADINGS FLOAT SEAMLESSLY */
+    .page-header {
+      background: transparent !important;
+      background-image: none !important;
+      border: none !important;
+      box-shadow: none !important;
+      margin: 0 !important;
+      padding: 32px 0 16px 0 !important;
+      text-align: center !important;
+    }
+
+    .page-header h1 {
+      font-size: 30px !important;
+      font-weight: 700 !important;
+      color: #1d1d1f !important;
+      letter-spacing: -0.025em !important;
+      margin-bottom: 6px !important;
+    }
+
+    .page-header p, .page-header .lead {
+      font-size: 15px !important;
+      color: #6e6e73 !important;
+      margin: 0 !important;
+    }
+
+    /* 4. SEAMLESS PORCELAIN CARDS */
+    .card, .bg-body-tertiary {
+      background: #ffffff !important;
+      border: 1px solid rgba(0, 0, 0, 0.06) !important;
+      border-radius: 18px !important;
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.03) !important;
+      color: #1d1d1f !important;
+    }
+
+    /* 5. MODAL BACKDROP & DIALOG (Z-INDEX 1050 / 1055) */
+    .modal-backdrop, .modal-backdrop.show {
+      position: fixed !important;
+      top: 0 !important;
+      left: 0 !important;
+      right: 0 !important;
+      bottom: 0 !important;
+      width: 100vw !important;
+      height: 100vh !important;
+      background-color: rgba(0, 0, 0, 0.45) !important;
+      backdrop-filter: blur(4px) !important;
+      -webkit-backdrop-filter: blur(4px) !important;
+      opacity: 1 !important;
+      z-index: 1050 !important;
+    }
+
+    .modal, #challenge-window {
+      position: fixed !important;
+      z-index: 1055 !important;
+    }
+
+    .modal-dialog {
+      z-index: 1056 !important;
+    }
+
+    .modal-content {
+      background: #ffffff !important;
+      background-color: #ffffff !important;
+      color: #1d1d1f !important;
+      border: 1px solid rgba(0, 0, 0, 0.08) !important;
+      border-radius: 20px !important;
+      box-shadow: 0 20px 48px -10px rgba(0, 0, 0, 0.2) !important;
+      backdrop-filter: none !important;
+      -webkit-backdrop-filter: none !important;
+      opacity: 1 !important;
+    }
+
+    /* 6. CLEAN SOLID FOOTER */
+    .footer {
+      position: relative !important;
+      bottom: auto !important;
+      margin-top: auto !important;
+      width: 100% !important;
+      min-height: 56px !important;
+      padding: 20px 0 !important;
+      background-color: #ffffff !important;
+      border-top: 1px solid rgba(0, 0, 0, 0.06) !important;
+      z-index: 10 !important;
+    }
+
+    .footer-text {
+      font-size: 13px !important;
+      color: #86868b !important;
+    }
+
+    .jumbotron, [class*="jumbotron"] {
+      display: none !important;
+    }
+  </style>
 </head>
 <body>
 {% include "components/navbar.html" %}
@@ -50,31 +205,8 @@
 {% include "components/snackbar.html" %}
 
 <footer class="footer">
-  <div class="container">
-    <div class="footer-content">
-      <!-- 左侧：CTFd版权信息 -->
-      <div class="footer-left">
-        <a href="https://ctfd.io" class="footer-link">
-          <span class="footer-text">{% trans %}Powered by CTFd{% endtrans %}</span>
-        </a>
-      </div>
-      
-      <!-- 中间：分隔线 -->
-      <div class="footer-divider"></div>
-      
-      <!-- 右侧：开发者署名 -->
-      <div class="footer-right">
-        <div class="developer-attribution">
-          <span class="attribution-text">Design by</span>
-          <a href="https://github.com/jiayuqi7813" class="developer-link" target="_blank" rel="noopener">
-            <svg class="github-icon" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
-            </svg>
-            <span class="developer-name">Sn1waR</span>
-          </a>
-        </div>
-      </div>
-    </div>
+  <div class="container text-center">
+    <span class="footer-text">&copy; {{ Configs.ctf_name }} &bull; Cyber Security Competition</span>
   </div>
 </footer>
 

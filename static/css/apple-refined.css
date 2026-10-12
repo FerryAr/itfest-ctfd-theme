@@ -1,0 +1,1310 @@
+/* ==============================================================================
+   APPLE CUPERTINO DESIGN SYSTEM (HIG SPECIFICATIONS)
+   ============================================================================== */
+
+:root {
+  --apple-font: "Inter", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif;
+  --apple-mono: "JetBrains Mono", "SF Mono", Menlo, Consolas, monospace;
+  --cupertino-accent: #33D17A;
+  --cupertino-accent-hover: #2ec16f;
+  
+  /* Cupertino Atmosphere */
+  --cupertino-canvas: #f5f5f7;
+  --cupertino-glass: rgba(255, 255, 255, 0.78);
+  --cupertino-glass-card: rgba(255, 255, 255, 0.88);
+  --cupertino-border: rgba(0, 0, 0, 0.07);
+  --cupertino-border-glass: rgba(255, 255, 255, 0.7);
+  --cupertino-shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.02);
+  --cupertino-shadow-card: 0 4px 20px -2px rgba(0, 0, 0, 0.04), 0 2px 6px -1px rgba(0, 0, 0, 0.02);
+  --cupertino-shadow-modal: 0 24px 64px -12px rgba(0, 0, 0, 0.16), 0 0 0 1px rgba(0, 0, 0, 0.05);
+  
+  --cupertino-text-primary: #1d1d1f;
+  --cupertino-text-secondary: #86868b;
+  --cupertino-text-tertiary: #a1a1a6;
+}
+
+/* Base Body with Cupertino Typography */
+body {
+  font-family: var(--apple-font) !important;
+  background-color: var(--cupertino-canvas) !important;
+  color: var(--cupertino-text-primary) !important;
+  -webkit-font-smoothing: antialiased !important;
+  -moz-osx-font-smoothing: grayscale !important;
+  letter-spacing: -0.014em !important;
+  font-size: 16px !important;
+  line-height: 1.47059 !important;
+}
+
+
+/* ==============================================================================
+   PROPORTIONAL & SPACIOUS APPLE NAVBAR
+   ============================================================================== */
+body {
+  padding-top: 76px !important;
+}
+
+.navbar {
+  height: auto !important;
+  min-height: 68px !important;
+  padding: 10px 0 !important;
+  background: rgba(245, 245, 247, 0.88) !important;
+  backdrop-filter: blur(25px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(25px) saturate(180%) !important;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08) !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03) !important;
+}
+
+.navbar .container {
+  display: flex !important;
+  align-items: center !important;
+}
+
+.navbar-brand {
+  font-family: var(--apple-font) !important;
+  font-size: 18px !important;
+  font-weight: 700 !important;
+  letter-spacing: -0.025em !important;
+  color: #1d1d1f !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  margin-right: 28px !important;
+}
+
+.navbar .nav-link {
+  font-size: 14.5px !important;
+  font-weight: 500 !important;
+  color: #6e6e73 !important;
+  padding: 8px 16px !important;
+  border-radius: 980px !important;
+  transition: all 0.15s ease !important;
+}
+
+.navbar .nav-link:hover {
+  color: #1d1d1f !important;
+  background: rgba(0, 0, 0, 0.05) !important;
+}
+
+.navbar .nav-link.active {
+  color: #1d1d1f !important;
+  background: rgba(0, 0, 0, 0.06) !important;
+  font-weight: 600 !important;
+}
+
+.nav-btn-register {
+  font-size: 14.5px !important;
+  font-weight: 500 !important;
+  color: #6e6e73 !important;
+  padding: 8px 18px !important;
+}
+
+.nav-btn-register:hover {
+  color: #1d1d1f !important;
+}
+
+.nav-btn-login {
+  background: #33D17A !important;
+  border: none !important;
+  border-radius: 980px !important;
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  padding: 8px 22px !important;
+  color: #06140b !important;
+  box-shadow: 0 2px 6px rgba(51, 209, 122, 0.28) !important;
+  transition: all 0.15s ease !important;
+}
+
+.nav-btn-login:hover {
+  background: #2ec16f !important;
+  transform: translateY(-1px) !important;
+  box-shadow: 0 4px 14px rgba(51, 209, 122, 0.38) !important;
+}
+
+/* ==============================================================================
+   2. CUPERTINO TYPOGRAPHY HEADINGS
+   ============================================================================== */
+h1, h2, h3, .jumbotron h1 {
+  font-family: var(--apple-font) !important;
+  color: var(--cupertino-text-primary) !important;
+  letter-spacing: -0.035em !important;
+  font-weight: 600 !important;
+}
+
+h1, .jumbotron h1 {
+  font-size: 32px !important;
+  line-height: 1.15 !important;
+}
+
+.jumbotron {
+  background: transparent !important;
+  border: none !important;
+  padding: 44px 0 20px 0 !important;
+  margin: 0 !important;
+  text-align: center !important;
+}
+
+.jumbotron .lead {
+  font-size: 15px !important;
+  color: var(--cupertino-text-secondary) !important;
+  font-weight: 400 !important;
+  max-width: 520px !important;
+  margin: 8px auto 0 !important;
+  line-height: 1.45 !important;
+}
+
+
+/* Crisp Solid Cards (Fixing GPU font blur caused by backdrop-filter) */
+.card, .bg-body-tertiary {
+  background: #ffffff !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  border: 1px solid rgba(0, 0, 0, 0.08) !important;
+  border-radius: 18px !important;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04) !important;
+  color: #1d1d1f !important;
+  transform: none !important;
+}
+
+
+.card-header {
+  background: transparent !important;
+  border-bottom: 1px solid var(--cupertino-border) !important;
+  padding: 16px 20px !important;
+  font-size: 13.5px !important;
+  font-weight: 600 !important;
+  color: var(--cupertino-text-primary) !important;
+}
+
+/* ==============================================================================
+   4. CUPERTINO BUTTONS (Apple 980px Pill with Micro Inset Glow)
+   ============================================================================== */
+.btn-primary, .btn-apple-primary {
+  background-color: var(--cupertino-accent) !important;
+  border: none !important;
+  border-radius: 980px !important;
+  font-size: 13.5px !important;
+  font-weight: 600 !important;
+  letter-spacing: -0.015em !important;
+  padding: 10px 22px !important;
+  color: #04160c !important;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.35) !important;
+  transition: all 0.2s cubic-bezier(0.25, 0.1, 0.25, 1) !important;
+}
+
+.btn-primary:hover, .btn-apple-primary:hover {
+  background-color: var(--cupertino-accent-hover) !important;
+  transform: scale(1.015) !important;
+  box-shadow: 0 4px 12px rgba(51, 209, 122, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.4) !important;
+}
+
+.btn-primary:active, .btn-apple-primary:active {
+  transform: scale(0.985) !important;
+}
+
+/* ==============================================================================
+   5. CUPERTINO FORM CONTROLS (Soft Inset Inputs)
+   ============================================================================== */
+.form-control, .form-select, .auth-input, .challenge-input {
+  background: rgba(0, 0, 0, 0.035) !important;
+  border: 1px solid rgba(0, 0, 0, 0.09) !important;
+  border-radius: 12px !important;
+  padding: 11px 14px !important;
+  font-size: 15px !important;
+  color: var(--cupertino-text-primary) !important;
+  transition: all 0.2s cubic-bezier(0.25, 0.1, 0.25, 1) !important;
+}
+
+.form-control:focus, .form-select:focus, .auth-input:focus, .challenge-input:focus {
+  background: #ffffff !important;
+  border-color: var(--cupertino-accent) !important;
+  box-shadow: 0 0 0 3.5px rgba(51, 209, 122, 0.18) !important;
+  outline: none !important;
+}
+
+/* ==============================================================================
+   6. CUPERTINO SEGMENTED CONTROL (Tabs in Modals & Settings)
+   ============================================================================== */
+.nav-tabs, .modal-body .nav-tabs {
+  background: rgba(0, 0, 0, 0.05) !important;
+  padding: 3px !important;
+  border-radius: 10px !important;
+  border: none !important;
+  display: inline-flex !important;
+  gap: 2px !important;
+}
+
+.nav-tabs .nav-link, .modal-body .nav-tabs .nav-link {
+  border: none !important;
+  border-radius: 8px !important;
+  padding: 5px 14px !important;
+  font-size: 14.5px !important;
+  font-weight: 500 !important;
+  color: var(--cupertino-text-secondary) !important;
+  background: transparent !important;
+  transition: all 0.2s cubic-bezier(0.25, 0.1, 0.25, 1) !important;
+}
+
+.nav-tabs .nav-link.active, .modal-body .nav-tabs .nav-link.active {
+  background: #ffffff !important;
+  color: var(--cupertino-text-primary) !important;
+  font-weight: 600 !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1), 0 0.5px 1px rgba(0, 0, 0, 0.06) !important;
+}
+
+/* Modal Popup Cupertino Spec */
+.modal-content {
+  background: rgba(255, 255, 255, 0.94) !important;
+  backdrop-filter: blur(40px) saturate(190%) !important;
+  -webkit-backdrop-filter: blur(40px) saturate(190%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.8) !important;
+  border-radius: 24px !important;
+  box-shadow: var(--cupertino-shadow-modal) !important;
+}
+
+/* ==============================================================================
+   7. CHALLENGE CARDS (Cupertino Interactive Tiles)
+   ============================================================================== */
+.challenge-card {
+  background: #ffffff !important;
+  border: 1px solid rgba(0, 0, 0, 0.06) !important;
+  border-radius: 16px !important;
+  padding: 16px !important;
+  box-shadow: var(--cupertino-shadow-sm) !important;
+  transition: all 0.25s cubic-bezier(0.25, 0.1, 0.25, 1) !important;
+  cursor: pointer !important;
+}
+
+.challenge-card:hover:not(.challenge-solved) {
+  transform: translateY(-2px) !important;
+  border-color: rgba(0, 0, 0, 0.12) !important;
+  box-shadow: 0 8px 24px -4px rgba(0, 0, 0, 0.08) !important;
+}
+
+.challenge-solved {
+  opacity: 0.65 !important;
+  background: rgba(245, 245, 247, 0.7) !important;
+}
+
+/* ==============================================================================
+   8. CUPERTINO AUTH PAGE (LOGIN & REGISTER)
+   ============================================================================== */
+.auth-page {
+  background: var(--cupertino-canvas) !important;
+}
+
+.auth-container {
+  max-width: 500px !important;
+  width: 100% !important;
+}
+
+.auth-content {
+  background: #ffffff !important;
+  border: 1px solid rgba(0, 0, 0, 0.06) !important;
+  border-radius: 24px !important;
+  padding: 34px 30px !important;
+  box-shadow: 0 12px 36px -4px rgba(0, 0, 0, 0.08), 0 0 1px 0 rgba(0, 0, 0, 0.04) !important;
+}
+
+.auth-heading {
+  font-size: 26px !important;
+  font-weight: 700 !important;
+  letter-spacing: -0.035em !important;
+  color: var(--cupertino-text-primary) !important;
+}
+
+.auth-subheading {
+  font-size: 13.5px !important;
+  color: var(--cupertino-text-secondary) !important;
+}
+
+/* ==============================================================================
+   9. CUPERTINO MINIMAL FOOTER
+   ============================================================================== */
+.footer {
+  background: transparent !important;
+  border-top: 1px solid var(--cupertino-border) !important;
+  padding: 24px 0 !important;
+}
+
+.footer-text {
+  font-size: 15px !important;
+  color: var(--cupertino-text-tertiary) !important;
+  letter-spacing: -0.01em !important;
+}
+
+
+/* ==============================================================================
+   OLYMPIC 3D-STEP PODIUM (SCOREBOARD)
+   ============================================================================== */
+.podium-stage {
+  display: flex !important;
+  align-items: flex-end !important;
+  justify-content: center !important;
+  gap: 14px !important;
+  min-height: 180px !important;
+  padding-bottom: 4px !important;
+}
+
+.podium-step {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  width: 95px !important;
+  text-align: center !important;
+}
+
+.podium-competitor {
+  margin-bottom: 8px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  width: 100% !important;
+}
+
+.medal-emoji {
+  font-size: 26px !important;
+  line-height: 1 !important;
+  margin-bottom: 4px !important;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.15)) !important;
+  transition: transform 0.2s ease !important;
+}
+
+.medal-emoji.crown {
+  font-size: 24px !important;
+}
+
+.podium-step:hover .medal-emoji {
+  transform: translateY(-3px) scale(1.1) !important;
+}
+
+.competitor-name {
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  color: var(--text-primary) !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  max-width: 90px !important;
+  line-height: 1.2 !important;
+}
+
+.competitor-pts {
+  font-family: var(--apple-mono) !important;
+  font-size: 15px !important;
+  font-weight: 600 !important;
+  color: #33D17A !important;
+  margin-top: 2px !important;
+}
+
+/* Pillar Blocks (Step-Up Height) */
+.podium-pillar {
+  width: 100% !important;
+  border-radius: 12px 12px 4px 4px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08) !important;
+  border: 1px solid rgba(0, 0, 0, 0.08) !important;
+  transition: all 0.2s ease !important;
+}
+
+.pillar-rank {
+  font-family: var(--apple-font) !important;
+  font-size: 24px !important;
+  font-weight: 800 !important;
+  opacity: 0.9 !important;
+}
+
+/* 1st Place (Center - Highest) */
+.step-1 .podium-pillar {
+  height: 90px !important;
+  background: linear-gradient(180deg, #ffd700 0%, #f1c40f 100%) !important;
+  border-color: #f39c12 !important;
+  box-shadow: 0 8px 24px rgba(241, 196, 15, 0.35) !important;
+}
+.step-1 .pillar-rank {
+  color: #7d5a00 !important;
+}
+
+/* 2nd Place (Left - Medium) */
+.step-2 .podium-pillar {
+  height: 65px !important;
+  background: linear-gradient(180deg, #f1f2f6 0%, #dfe4ea 100%) !important;
+  border-color: #ced6e0 !important;
+  box-shadow: 0 6px 18px rgba(164, 176, 190, 0.25) !important;
+}
+.step-2 .pillar-rank {
+  color: #57606f !important;
+}
+
+/* 3rd Place (Right - Lowest) */
+.step-3 .podium-pillar {
+  height: 48px !important;
+  background: linear-gradient(180deg, #f8a570 0%, #e17055 100%) !important;
+  border-color: #d63031 !important;
+  box-shadow: 0 4px 14px rgba(225, 112, 85, 0.25) !important;
+}
+.step-3 .pillar-rank {
+  color: #632213 !important;
+}
+
+
+/* ==============================================================================
+   LEGIBLE, COMFORTABLE FONT SIZES (ANTI-TINY TEXT)
+   ============================================================================== */
+body, p, .lead, .nav-link, .btn, .card-body {
+  font-size: 15.5px !important;
+  line-height: 1.55 !important;
+}
+
+.navbar {
+  height: 60px !important;
+  min-height: 60px !important;
+}
+
+.navbar-brand {
+  font-size: 16px !important;
+}
+
+.navbar .nav-link {
+  font-size: 14.5px !important;
+  padding: 8px 16px !important;
+}
+
+.nav-btn-register, .nav-btn-login {
+  font-size: 14px !important;
+  padding: 8px 18px !important;
+}
+
+/* Headings */
+h1, .display-4, .display-5 {
+  font-size: 32px !important;
+  font-weight: 700 !important;
+}
+
+h2 { font-size: 26px !important; }
+h3 { font-size: 21px !important; }
+h5, h6, .card-title { font-size: 17px !important; }
+
+/* Table text */
+.table th, .table td {
+  font-size: 14.5px !important;
+  padding: 14px 16px !important;
+}
+
+/* Page Header (Replacing Jumbotron completely) */
+.page-header {
+  background: transparent !important;
+  background-image: none !important; background-size: 24px 24px !important; background-attachment: fixed !important;
+  border: none !important;
+  padding: 24px 0 12px 0 !important;
+}
+
+.page-header h1 {
+  font-size: 32px !important;
+  color: #1d1d1f !important;
+  margin-bottom: 6px !important;
+}
+
+.page-header p, .page-header .lead {
+  font-size: 15.5px !important;
+  color: #6e6e73 !important;
+}
+
+/* Completely kill jumbotron background */
+.jumbotron, [class*="jumbotron"] {
+  background: transparent !important;
+  background-image: none !important; background-size: 24px 24px !important; background-attachment: fixed !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 20px 0 !important;
+}
+
+/* Clean Crisp Buttons for Team/Enrollment Pages */
+.btn-outline-secondary {
+  border: 1px solid rgba(0, 0, 0, 0.15) !important;
+  color: #1d1d1f !important;
+  background: #ffffff !important;
+  border-radius: 980px !important;
+  font-weight: 500 !important;
+  transition: all 0.15s ease !important;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04) !important;
+}
+
+.btn-outline-secondary:hover {
+  background: rgba(0, 0, 0, 0.04) !important;
+  border-color: rgba(0, 0, 0, 0.25) !important;
+  color: #1d1d1f !important;
+}
+
+.glow-primary, .glow-success {
+  box-shadow: none !important;
+}
+
+/* ==============================================================================
+   OPTICAL VERTICAL CENTERING (NO MORE "TERLALU KEBAWAH")
+   ============================================================================== */
+html {
+  height: 100% !important;
+}
+
+body {
+  min-height: 100vh !important;
+  display: flex !important;
+  flex-direction: column !important;
+  padding-top: 68px !important;
+  margin: 0 !important;
+}
+
+main[role="main"] {
+  flex: 1 0 auto !important;
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+.center-content-wrapper {
+  flex: 1 0 auto !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  min-height: calc(100vh - 68px - 60px) !important;
+  padding: 20px 16px !important;
+  margin-top: -24px !important;
+}
+
+@media (max-width: 768px) {
+  .center-content-wrapper {
+    margin-top: 0 !important;
+    min-height: auto !important;
+    padding: 32px 16px !important;
+  }
+}
+
+.footer {
+  margin-top: auto !important;
+  flex-shrink: 0 !important;
+}
+
+
+/* ==============================================================================
+   UNIVERSAL BUTTON SYNCHRONIZATION (100% CONSISTENT APPLE #33D17A & PILL)
+   ============================================================================== */
+
+/* 1. ALL PRIMARY BUTTONS ACROSS THE ENTIRE PLATFORM */
+.btn-primary, 
+.btn-success, 
+.btn-apple-primary, 
+.challenge-submit, 
+.nav-btn-login,
+input[type="submit"].btn-primary,
+button[type="submit"].btn-primary {
+  background-color: #33D17A !important;
+  background-image: none !important; background-size: 24px 24px !important; background-attachment: fixed !important;
+  border: 1px solid #33D17A !important;
+  color: #06140b !important;
+  border-radius: 980px !important;
+  font-weight: 600 !important;
+  letter-spacing: -0.01em !important;
+  box-shadow: 0 2px 6px rgba(51, 209, 122, 0.25) !important;
+  transition: all 0.2s cubic-bezier(0.25, 0.1, 0.25, 1) !important;
+  text-decoration: none !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.btn-primary:hover, 
+.btn-success:hover, 
+.btn-apple-primary:hover, 
+.challenge-submit:hover, 
+.nav-btn-login:hover,
+input[type="submit"].btn-primary:hover,
+button[type="submit"].btn-primary:hover {
+  background-color: #2ec16f !important;
+  background-image: none !important; background-size: 24px 24px !important; background-attachment: fixed !important;
+  border-color: #2ec16f !important;
+  color: #06140b !important;
+  transform: translateY(-1px) !important;
+  box-shadow: 0 4px 14px rgba(51, 209, 122, 0.35) !important;
+}
+
+.btn-primary:active, 
+.btn-success:active, 
+.btn-apple-primary:active, 
+.challenge-submit:active, 
+.nav-btn-login:active,
+input[type="submit"].btn-primary:active,
+button[type="submit"].btn-primary:active {
+  background-color: #28b064 !important;
+  border-color: #28b064 !important;
+  color: #06140b !important;
+  transform: scale(0.985) !important;
+}
+
+/* 2. ALL SECONDARY & OUTLINE BUTTONS */
+.btn-secondary,
+.btn-outline-secondary,
+.btn-outline-primary,
+.btn-outline-info,
+.btn-outline-success {
+  background-color: #ffffff !important;
+  background-image: none !important; background-size: 24px 24px !important; background-attachment: fixed !important;
+  border: 1px solid rgba(0, 0, 0, 0.16) !important;
+  color: #1d1d1f !important;
+  border-radius: 980px !important;
+  font-weight: 500 !important;
+  letter-spacing: -0.01em !important;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04) !important;
+  transition: all 0.2s cubic-bezier(0.25, 0.1, 0.25, 1) !important;
+  text-decoration: none !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.btn-secondary:hover,
+.btn-outline-secondary:hover,
+.btn-outline-primary:hover,
+.btn-outline-info:hover,
+.btn-outline-success:hover {
+  background-color: rgba(0, 0, 0, 0.04) !important;
+  background-image: none !important; background-size: 24px 24px !important; background-attachment: fixed !important;
+  border-color: rgba(0, 0, 0, 0.28) !important;
+  color: #1d1d1f !important;
+  transform: translateY(-1px) !important;
+}
+
+.btn-secondary:active,
+.btn-outline-secondary:active,
+.btn-outline-primary:active,
+.btn-outline-info:active,
+.btn-outline-success:active {
+  background-color: rgba(0, 0, 0, 0.08) !important;
+  transform: scale(0.985) !important;
+}
+
+/* Remove all glow classes that add blurry purple/blue halos */
+.glow-primary, .glow-success, [class*="glow-"] {
+  box-shadow: none !important;
+}
+
+
+/* Spacious Authentic Auth Card */
+.auth-page .card, .center-content-wrapper .card {
+  width: 100% !important;
+  max-width: 500px !important;
+  margin: 0 auto !important;
+  padding: 44px 40px !important;
+  border-radius: 22px !important;
+  box-shadow: 0 4px 28px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.02) !important;
+}
+
+@media (max-width: 576px) {
+  .auth-page .card, .center-content-wrapper .card {
+    padding: 28px 20px !important;
+  }
+}
+
+.center-content-wrapper .form-control {
+  padding: 12px 16px !important;
+  font-size: 15px !important;
+  border-radius: 12px !important;
+}
+
+
+
+
+/* ==============================================================================
+   GUARANTEED VISIBLE CRISP SVG DOT-GRID TEXTURE (ALL MONITORS & DPIs)
+   ============================================================================== */
+html, 
+
+
+
+/* Tactical Challenge Card Refinement */
+.challenge-card {
+  background: #ffffff !important;
+  border: 1px solid rgba(0, 0, 0, 0.08) !important;
+  border-radius: 16px !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03) !important;
+  transition: all 0.2s cubic-bezier(0.25, 0.1, 0.25, 1) !important;
+}
+
+.challenge-card:hover:not(.challenge-solved) {
+  border-color: #33D17A !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 8px 24px -4px rgba(0, 0, 0, 0.08) !important;
+}
+
+.challenge-solved {
+  opacity: 0.65 !important;
+  background: rgba(245, 245, 247, 0.8) !important;
+  border-color: rgba(51, 209, 122, 0.3) !important;
+}
+
+/* Points pill badge */
+.badge-points {
+  font-family: var(--apple-mono) !important;
+  font-size: 12px !important;
+  font-weight: 700 !important;
+  background: rgba(51, 209, 122, 0.12) !important;
+  color: #1a8f4c !important;
+  border: 1px solid rgba(51, 209, 122, 0.25) !important;
+  border-radius: 980px !important;
+  padding: 4px 10px !important;
+}
+
+
+/* Ensure dot-grid canvas shines through everywhere across all pages */
+html, 
+
+main[role="main"],
+.center-content-wrapper,
+.auth-page,
+.container,
+.container-fluid,
+.min-vh-100 {
+  background: transparent !important;
+  background-image: none !important; background-size: 24px 24px !important; background-attachment: fixed !important;
+}
+
+
+/* ==============================================================================
+   PERMANENT FOOTER POSITIONING (AT THE VERY BOTTOM OF ALL SCROLLABLE CONTENT)
+   ============================================================================== */
+html {
+  height: auto !important;
+  min-height: 100% !important;
+}
+
+
+
+main[role="main"] {
+  flex: 1 0 auto !important;
+  width: 100% !important;
+  margin-bottom: 40px !important;
+}
+
+.footer {
+  position: static !important;
+  bottom: auto !important;
+  margin-top: auto !important;
+  width: 100% !important;
+  height: auto !important;
+  min-height: 56px !important;
+  padding: 20px 0 !important;
+  background: #ffffff !important;
+  border-top: 1px solid rgba(0, 0, 0, 0.08) !important;
+  clear: both !important;
+  z-index: 1 !important;
+}
+
+.footer-text {
+  font-size: 13px !important;
+  color: #86868b !important;
+}
+
+
+/* ==============================================================================
+   TACTICAL DOT-GRID CANVAS (USER-APPROVED AESTHETIC)
+   ============================================================================== */
+html, 
+
+
+/* ==============================================================================
+   OPAQUE NAVBAR (BLOCKS DOT-GRID BLEED-THROUGH) & PREMIUM GAMIFIED TOUCHES
+   ============================================================================== */
+
+/* 1. Navbar Solid Opaque Glass — No dots shining through */
+.navbar {
+  background: #ffffff !important;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08) !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03) !important;
+  z-index: 1030 !important;
+}
+
+/* Status indicator live dot on brand */
+
+
+/* Active Nav link pill */
+.navbar .nav-link.active {
+  color: #1d1d1f !important;
+  background: rgba(0, 0, 0, 0.06) !important;
+  font-weight: 600 !important;
+}
+
+/* 2. Challenge Completion Matrix Gamification */
+.challenge-matrix {
+  border-collapse: separate !important;
+  border-spacing: 0 !important;
+}
+
+.solve-indicator {
+  width: 28px !important;
+  height: 28px !important;
+  border-radius: 8px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  transition: transform 0.15s ease, box-shadow 0.15s ease !important;
+}
+
+.solve-indicator:hover {
+  transform: scale(1.15) !important;
+  z-index: 5 !important;
+}
+
+/* First blood indicator: Golden Star Medal */
+.solve-indicator.first-blood {
+  background: linear-gradient(135deg, #ffd700 0%, #ffae00 100%) !important;
+  color: #5c3800 !important;
+  border: 1px solid #e6a100 !important;
+  box-shadow: 0 2px 8px rgba(255, 174, 0, 0.4) !important;
+}
+
+/* Regular solve indicator: Emerald Mint */
+.solve-indicator.solved {
+  background: rgba(51, 209, 122, 0.16) !important;
+  color: #1a8f4c !important;
+  border: 1.5px solid #33D17A !important;
+}
+
+/* 3. Card Elevation & Premium Depth */
+.card {
+  background: #ffffff !important;
+  border: 1px solid rgba(0, 0, 0, 0.08) !important;
+  border-radius: 18px !important;
+  box-shadow: 0 4px 24px -2px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.02) !important;
+}
+
+.card:hover:not(.no-hover) {
+  box-shadow: 0 8px 30px -4px rgba(0, 0, 0, 0.08) !important;
+}
+
+
+/* 100% SOLID OPAQUE WHITE NAVBAR (ZERO DOT BLEED-THROUGH) */
+nav.navbar, .navbar, .glass-effect {
+  background-color: #ffffff !important;
+  background-image: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08) !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04) !important;
+  opacity: 1 !important;
+}
+
+
+/* ==============================================================================
+   VIBRANT & ATTRACTIVE CUPERTINO COLOR SUITE
+   ============================================================================== */
+
+/* Category Colors & Top Accent Borders */
+.category-web, .tag-web { border-top: 4px solid #0284c7 !important; }
+.category-crypto, .tag-crypto { border-top: 4px solid #9333ea !important; }
+.category-pwn, .tag-pwn, .category-binary, .tag-binary { border-top: 4px solid #e11d48 !important; }
+.category-reverse, .tag-reverse { border-top: 4px solid #059669 !important; }
+.category-forensics, .tag-forensics, .category-osint, .tag-osint { border-top: 4px solid #d97706 !important; }
+.category-misc, .tag-misc { border-top: 4px solid #0d9488 !important; }
+
+/* Category Pills in Challenge Cards */
+.badge.category-pill-web { background: #e0f2fe !important; color: #0284c7 !important; font-weight: 600; }
+.badge.category-pill-crypto { background: #f3e8ff !important; color: #7c3aed !important; font-weight: 600; }
+.badge.category-pill-pwn { background: #ffe4e6 !important; color: #e11d48 !important; font-weight: 600; }
+.badge.category-pill-reverse { background: #d1fae5 !important; color: #059669 !important; font-weight: 600; }
+.badge.category-pill-misc { background: #ccfbf1 !important; color: #0d9488 !important; font-weight: 600; }
+
+/* Challenge Cards: Interactive, Colorful & Tactile */
+.challenge-card {
+  background: #ffffff !important;
+  border: 1px solid rgba(0, 0, 0, 0.08) !important;
+  border-radius: 16px !important;
+  box-shadow: 0 4px 16px -2px rgba(0, 0, 0, 0.05) !important;
+  transition: all 0.25s cubic-bezier(0.25, 0.1, 0.25, 1) !important;
+  overflow: hidden !important;
+}
+
+.challenge-card:hover:not(.challenge-solved) {
+  transform: translateY(-3px) scale(1.01) !important;
+  box-shadow: 0 12px 28px -4px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Vibrant Points Badges */
+.badge.bg-gradient-primary {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important;
+  color: #ffffff !important;
+  font-family: var(--apple-mono) !important;
+  font-weight: 700 !important;
+  letter-spacing: -0.01em !important;
+  box-shadow: 0 2px 6px rgba(16, 185, 129, 0.35) !important;
+  border: none !important;
+}
+
+/* Solved Challenge State */
+.challenge-card.challenge-solved {
+  border-top-color: #34c759 !important;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.9) 0%, rgba(209, 250, 229, 0.35) 100%) !important;
+  opacity: 0.8 !important;
+}
+
+.challenge-card.challenge-solved .card-title {
+  color: #065f46 !important;
+}
+
+/* Category Filter Buttons on Left Sidebar */
+.category-filter-btn {
+  border-radius: 10px !important;
+  margin-bottom: 3px !important;
+  font-size: 13.5px !important;
+  font-weight: 500 !important;
+  color: #4b5563 !important;
+  transition: all 0.15s ease !important;
+  border-left: 3px solid transparent !important;
+}
+
+.category-filter-btn:hover {
+  background: rgba(0, 0, 0, 0.04) !important;
+  color: #111827 !important;
+}
+
+.category-filter-btn.active {
+  background: #ffffff !important;
+  color: #111827 !important;
+  font-weight: 600 !important;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05) !important;
+  border-left-color: #10b981 !important;
+}
+
+/* Matrix Table Enhancements */
+.challenge-matrix .sticky-left {
+  background: #ffffff !important;
+  border-right: 2px solid #e5e7eb !important;
+}
+
+.challenge-matrix tbody tr:hover {
+  background: rgba(59, 130, 246, 0.03) !important;
+}
+
+/* Gold, Silver, Bronze Indicators in Table */
+.solve-indicator.first-blood {
+  background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%) !important;
+  color: #78350f !important;
+  box-shadow: 0 2px 8px rgba(245, 158, 11, 0.45) !important;
+}
+
+.solve-indicator.second-blood {
+  background: linear-gradient(135deg, #e2e8f0 0%, #cbd5e1 100%) !important;
+  color: #334155 !important;
+}
+
+.solve-indicator.third-blood {
+  background: linear-gradient(135deg, #fed7aa 0%, #fdba74 100%) !important;
+  color: #7c2d12 !important;
+}
+
+.solve-indicator.solved {
+  background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%) !important;
+  color: #065f46 !important;
+  border: 1px solid #34d399 !important;
+}
+
+
+/* ==============================================================================
+   PROPER MODAL & BACKDROP Z-INDEX HIERARCHY (FIXING BACKDROP BREAKAGE)
+   ============================================================================== */
+
+/* Standard Bootstrap z-index layer order */
+nav.navbar, .navbar {
+  z-index: 1030 !important;
+}
+
+.footer {
+  z-index: 10 !important;
+}
+
+/* Modal backdrop covers entire viewport evenly */
+.modal-backdrop {
+  z-index: 1050 !important;
+  background-color: rgba(0, 0, 0, 0.45) !important;
+  backdrop-filter: blur(4px) !important;
+  -webkit-backdrop-filter: blur(4px) !important;
+}
+
+.modal {
+  z-index: 1055 !important;
+}
+
+/* Crisp Solid White Modal Dialog (No more murky dark-gray translucent box!) */
+.modal-content {
+  background: #ffffff !important;
+  background-color: #ffffff !important;
+  color: #1d1d1f !important;
+  border: 1px solid rgba(0, 0, 0, 0.1) !important;
+  border-radius: 20px !important;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.25) !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  opacity: 1 !important;
+}
+
+.modal-content .modal-header,
+.modal-content .modal-body,
+.modal-content .modal-footer {
+  background: #ffffff !important;
+  color: #1d1d1f !important;
+}
+
+/* Modal text and input crisp contrast */
+.modal-content h1, 
+.modal-content h2, 
+.modal-content h3, 
+.modal-content h4, 
+.modal-content .chal-name {
+  color: #1d1d1f !important;
+  font-weight: 700 !important;
+}
+
+.modal-content p, 
+.modal-content .challenge-desc {
+  color: #374151 !important;
+  line-height: 1.6 !important;
+}
+
+.modal-content .challenge-input {
+  background: #f9fafb !important;
+  border: 1px solid #d1d5db !important;
+  color: #111827 !important;
+}
+
+.modal-content .challenge-input:focus {
+  background: #ffffff !important;
+  border-color: #33D17A !important;
+  box-shadow: 0 0 0 3px rgba(51, 209, 122, 0.2) !important;
+}
+
+.modal-content .challenge-submit {
+  background: #33D17A !important;
+  border: none !important;
+  color: #06140b !important;
+  font-weight: 600 !important;
+  box-shadow: 0 2px 6px rgba(51, 209, 122, 0.25) !important;
+}
+
+.modal-content .challenge-submit:hover {
+  background: #2ec16f !important;
+  color: #06140b !important;
+}
+
+/* Close button on modal */
+.modal-content .btn-close {
+  background-color: rgba(0, 0, 0, 0.08) !important;
+  opacity: 0.8 !important;
+  border-radius: 50% !important;
+  padding: 8px !important;
+  transition: all 0.15s ease !important;
+}
+
+.modal-content .btn-close:hover {
+  background-color: rgba(0, 0, 0, 0.15) !important;
+  opacity: 1 !important;
+}
+
+
+/* ==============================================================================
+   OPTION 1: ENGINEERING MICRO-GRID (BLUEPRINT HAIRLINE CANVAS)
+   ============================================================================== */
+main[role="main"] {
+  background-color: #fafafc !important;
+  background-image: 
+    radial-gradient(ellipse 80% 45% at 50% 0%, rgba(51, 209, 122, 0.045) 0%, transparent 80%),
+    radial-gradient(circle at 100% 10%, rgba(51, 209, 122, 0.04) 0%, transparent 40%) !important;
+  background-attachment: fixed !important;
+}
+
+
+/* ==============================================================================
+   KONSEP A: HARMONIC SLATE, PORCELAIN & EMERALD ACCENTS
+   ============================================================================== */
+:root {
+  --cupertino-canvas: #fafafc !important;
+  --apple-bg: #fafafc !important;
+  --text-primary: #0f172a !important;
+  --text-secondary: #475569 !important;
+}
+
+body {
+  background-color: #fafafc !important;
+  color: #0f172a !important;
+}
+
+/* Category Left Sidebar in Challenges */
+.category-sidebar .card {
+  border: 1px solid rgba(15, 23, 42, 0.08) !important;
+  box-shadow: 0 4px 16px rgba(15, 23, 42, 0.04) !important;
+}
+
+.category-filter-btn {
+  color: #475569 !important;
+}
+
+.category-filter-btn.active {
+  background: #ffffff !important;
+  color: #0f172a !important;
+  font-weight: 600 !important;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.06) !important;
+  border-left: 3px solid #33D17A !important;
+}
+
+/* Challenge Cards popping on Slate */
+.challenge-card {
+  background: #ffffff !important;
+  border: 1px solid rgba(15, 23, 42, 0.08) !important;
+  box-shadow: 0 4px 18px rgba(15, 23, 42, 0.05) !important;
+}
+
+.challenge-card:hover:not(.challenge-solved) {
+  transform: translateY(-3px) scale(1.01) !important;
+  box-shadow: 0 12px 32px rgba(15, 23, 42, 0.1) !important;
+  border-color: rgba(51, 209, 122, 0.4) !important;
+}
+
+/* Scoreboard Matrix Table */
+.challenge-matrix .sticky-left {
+  background: #ffffff !important;
+  border-right: 2px solid #cbd5e1 !important;
+}
+
+.challenge-matrix thead th {
+  border-bottom: 2px solid #cbd5e1 !important;
+}
+
+.challenge-matrix tbody td {
+  border-bottom: 1px solid #e2e8f0 !important;
+}
+
+
+/* ==============================================================================
+   6 ANTI-SLOP TACTICAL GAMIFICATION FEATURES (100% IMPLEMENTED)
+   ============================================================================== */
+
+/* FEATURE 1: Category Clear Rate Pill in Left Sidebar */
+.category-rate-badge {
+  font-family: var(--apple-mono) !important;
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  padding: 3px 8px !important;
+  border-radius: 6px !important;
+  letter-spacing: 0.02em !important;
+  transition: all 0.2s ease !important;
+}
+
+.category-rate-normal {
+  background: rgba(15, 23, 42, 0.06) !important;
+  color: #475569 !important;
+  border: 1px solid rgba(15, 23, 42, 0.08) !important;
+}
+
+.category-all-clear {
+  background: rgba(51, 209, 122, 0.15) !important;
+  color: #0d7a3e !important;
+  border: 1px solid rgba(51, 209, 122, 0.35) !important;
+  box-shadow: 0 1px 4px rgba(51, 209, 122, 0.2) !important;
+}
+
+/* FEATURE 2: Tactical PWNED / SOLVED Watermark Stamp */
+.pwned-stamp {
+  position: absolute;
+  right: 12px;
+  bottom: 8px;
+  font-family: var(--apple-mono);
+  font-size: 18px;
+  font-weight: 900;
+  letter-spacing: 0.15em;
+  color: #10b981;
+  opacity: 0.13;
+  transform: rotate(-12deg);
+  pointer-events: none;
+  user-select: none;
+  border: 2px solid #10b981;
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+
+/* FEATURE 3: Dynamic Decay Pill Indicators */
+.point-pill {
+  font-family: var(--apple-mono) !important;
+  font-weight: 700 !important;
+}
+
+.decay-star {
+  color: #fde047;
+  font-size: 11px;
+}
+
+.decay-arrow {
+  color: #fecdd3;
+  font-weight: 900;
+  font-size: 11px;
+  margin-left: 2px;
+}
+
+/* FEATURE 4: Tactile Modal Submit Button (CAPTURED! Response) */
+.btn-captured {
+  background-color: #059669 !important;
+  border-color: #059669 !important;
+  color: #ffffff !important;
+  transform: scale(1.02) !important;
+  box-shadow: 0 4px 16px rgba(5, 150, 105, 0.4) !important;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+/* FEATURE 5: Realtime First Blood Toast Notification */
+.toast {
+  background: #ffffff !important;
+  border: 1px solid rgba(0, 0, 0, 0.08) !important;
+  border-left: 4px solid #ef4444 !important;
+  border-radius: 12px !important;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12), 0 2px 6px rgba(0, 0, 0, 0.06) !important;
+  color: #1d1d1f !important;
+}
+
+.toast-header {
+  background: transparent !important;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06) !important;
+  color: #1d1d1f !important;
+  font-weight: 600 !important;
+}
+
+/* FEATURE 6: Tier Medali Rank di Scoreboard Table */
+.rank-badge-small {
+  width: 28px;
+  height: 28px;
+  margin: 0 auto;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--apple-mono);
+  font-size: 12px;
+  font-weight: 700;
+  transition: transform 0.15s ease;
+}
+
+.rank-badge-small.rank-1 {
+  background: #fef3c7 !important;
+  color: #b45309 !important;
+  border: 1px solid #fcd34d !important;
+}
+
+.rank-badge-small.rank-2 {
+  background: #f1f5f9 !important;
+  color: #475569 !important;
+  border: 1px solid #cbd5e1 !important;
+}
+
+.rank-badge-small.rank-3 {
+  background: #ffedd5 !important;
+  color: #9a3412 !important;
+  border: 1px solid #fdba74 !important;
+}
