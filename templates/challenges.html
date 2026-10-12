@@ -2,7 +2,7 @@
 
 {% block content %}
   <!-- Compact Hero Section -->
-  <div class="jumbotron">
+  <div class="page-header py-3 mb-3 text-center">
     <div class="container">
       <div class="row align-items-center">
         <div class="col-12 text-center">
@@ -42,6 +42,14 @@
            getTotalChallenges() {
              if (!this.loaded || !this.challenges) return 0;
              return this.challenges.length;
+           },
+           
+           getCategoryClearRate(category) {
+             if (!this.loaded || !this.challenges) return '';
+             const total = this.challenges.filter(c => c.category === category).length;
+             const solved = this.challenges.filter(c => c.category === category && c.solved_by_me).length;
+             if (total > 0 && solved === total) return '✓ ALL';
+             return `${solved}/${total}`;
            },
            
            getCategoryIcon(category) {
@@ -146,7 +154,7 @@
       <div x-ref="challengeWindow" id="challenge-window" class="modal fade challenge-modal-container" tabindex="-1" role="dialog" x-data="" x-html="$store.challenge.data.view"></div>
 
       <!-- Left Sidebar - Category Filter -->
-      <div class="col-lg-2 col-md-3">
+      <div class="col-lg-3 col-md-4">
         <div class="category-sidebar sticky-top" style="top: 90px;">
           <div class="card border-0 shadow-sm rounded-3">
             <div class="card-header bg-light border-0 py-3">
@@ -177,7 +185,7 @@
                   >
                     <i class="me-2" :class="getCategoryIcon(category) + ' ' + getCategoryColor(category)"></i>
                     <span x-text="category"></span>
-                    <span class="badge ms-auto" :class="getCategoryBadgeClass(category)" x-text="getSortedChallenges(category).length"></span>
+                    <span class="badge ms-auto category-rate-badge" :class="getCategoryClearRate(category) === '✓ ALL' ? 'category-all-clear' : 'category-rate-normal'" x-text="getCategoryClearRate(category)"></span>
                   </button>
                 </template>
               </div>
@@ -196,7 +204,7 @@
       </div>
 
       <!-- Main Content - Challenge Grid -->
-      <div class="col-lg-7 col-md-6">
+      <div class="col-lg-9 col-md-8">
         <div class="challenges-main">
           <!-- Loading State -->
           <div x-show="!loaded" class="text-center py-5">
@@ -242,24 +250,26 @@
                         ]"
                         @click="loadChallenge(c.id)"
                       >
-                        <!-- Solved Badge -->
+                        <!-- Solved Badge & Tactical Pwned Watermark -->
                         <div x-show="c.solved_by_me" class="solved-badge position-absolute top-0 end-0 m-2">
                           <i class="fas fa-check-circle text-success"></i>
                         </div>
+                        <div x-show="c.solved_by_me" class="pwned-stamp">SOLVED</div>
 
                         <!-- Card Content -->
                         <div class="card-body p-3 h-100 d-flex flex-column">
                           <!-- Challenge Name -->
                           <h6 class="card-title fw-bold mb-2 text-truncate" x-text="getCleanChallengeName(c.name)"></h6>
                           
-                          <!-- Points and Solve Count -->
+                          <!-- Points and Solve Count (Tactical Dynamic Decay) -->
                           <div class="d-flex justify-content-between align-items-center mb-2">
-                            <span class="badge bg-gradient-primary px-2 py-1 rounded-pill fw-bold small">
-                              <i class="fas fa-star me-1"></i>
+                            <span class="badge bg-gradient-primary px-2 py-1 rounded-pill fw-bold small point-pill">
+                              <span x-show="!c.solves || c.solves == 0" class="decay-star">✦ </span>
                               <span x-text="c.value"></span> pts
+                              <span x-show="c.solves && c.solves > 0" class="decay-arrow" title="Dynamic value decayed"> ↓</span>
                             </span>
                             <span class="badge bg-light text-muted px-2 py-1 rounded-pill small">
-                              <i class="fas fa-users me-1"></i>
+                              <i class="fas fa-bolt text-warning me-1"></i>
                               <span x-text="c.solves || 0"></span> {% trans %}solved{% endtrans %}
                             </span>
                           </div>
@@ -326,164 +336,21 @@
         </div>
       </div>
 
-      <!-- Right Sidebar - User Info -->
-      <div class="col-lg-3 col-md-3">
-        <div class="user-sidebar sticky-top" style="top: 90px;">
-          <!-- User Stats Card -->
-            <div class="card border-0 shadow-sm rounded-3 mb-3" x-data="UserStats" x-init="loadUserStats()">
-              <div class="card-header text-center py-3 user-header">
-                <h6 class="mb-1 fw-bold">{{ User.name }}</h6>
-                <small class="opacity-75">{% trans %}Competitor{% endtrans %}</small>
-              </div>
-            <div class="card-body p-3">
-              <div class="row g-3 text-center">
-                <div class="col-4">
-                  <div class="stat-item">
-                    <div class="stat-number fw-bold text-primary" x-text="userScore || '{{ User.score }}'">{{ User.score }}</div>
-                    <div class="stat-label small text-muted">{% trans %}Points{% endtrans %}</div>
-                  </div>
-                </div>
-                <div class="col-4">
-                  <div class="stat-item">
-                    <div class="stat-number fw-bold text-success" x-text="solvedCount || 0">0</div>
-                    <div class="stat-label small text-muted">{% trans %}Solved{% endtrans %}</div>
-                  </div>
-                </div>
-                <div class="col-4">
-                  <div class="stat-item">
-                    <div class="stat-number fw-bold text-warning" x-text="userRank || '#{{ User.place or '-' }}'">#{{ User.place or '-' }}</div>
-                    <div class="stat-label small text-muted">{% trans %}Rank{% endtrans %}</div>
-                  </div>
-                </div>
-              </div>
-              
-              <!-- Progress Bar -->
-              <div class="mt-3">
-                <div class="d-flex justify-content-between align-items-center mb-1">
-                  <small class="text-muted">{% trans %}Progress{% endtrans %}</small>
-                  <small class="text-muted">
-                    <span x-text="solvedCount || 0">0</span> / <span x-text="totalChallenges || 0">0</span>
-                  </small>
-                </div>
-                <div class="progress" style="height: 6px;">
-                  <div class="progress-bar bg-primary" 
-                       :style="{ width: totalChallenges > 0 ? ((solvedCount / totalChallenges) * 100) + '%' : '0%' }">
-                  </div>
-                </div>
-              </div>
-            </div>
           </div>
-
-          <!-- Activity & Notifications Card -->
-          <div class="card border-0 shadow-sm rounded-3" x-data="ActivityFeed" x-init="loadActivityData()">
-            <div class="card-header border-0 py-3">
-              <!-- Tab Navigation -->
-              <nav class="nav nav-pills nav-fill" role="tablist">
-                <button 
-                  class="nav-link rounded-pill fw-500 px-3 py-2" 
-                  :class="activeTab === 'notifications' ? 'active' : ''"
-                  @click="activeTab = 'notifications'; markAllNotificationsAsRead()"
-                  type="button"
-                >
-                  <i class="fas fa-bell me-1"></i>
-                  {% trans %}Notifications{% endtrans %}
-                  <span x-show="unreadCount > 0" class="badge bg-danger ms-1 rounded-pill" x-text="unreadCount"></span>
-                </button>
-                <button 
-                  class="nav-link rounded-pill fw-500 px-3 py-2" 
-                  :class="activeTab === 'activity' ? 'active' : ''"
-                  @click="activeTab = 'activity'; loadRecentSolves()"
-                  type="button"
-                >
-                  <i class="fas fa-activity me-1"></i>
-                  {% trans %}Activity{% endtrans %}
-                </button>
-              </nav>
-            </div>
-            
-            <div class="card-body p-3" style="min-height: 200px;">
-              <!-- Notifications Tab Content -->
-              <div x-show="activeTab === 'notifications'" x-transition>
-                <div x-show="notifications.length === 0" class="text-center text-muted py-3">
-                  <i class="fas fa-bell-slash mb-2" style="font-size: 2rem; opacity: 0.3;"></i>
-                  <p class="mb-0 small">{% trans %}No notifications yet{% endtrans %}</p>
-                </div>
-                
-                <div x-show="notifications.length > 0">
-                  <template x-for="notification in notifications.slice(0, 3)" :key="notification.id">
-                    <div class="notification-item d-flex align-items-start mb-3 pb-2 border-bottom" @click="markAllNotificationsAsRead()" style="cursor: pointer;">
-                      <div class="notification-icon me-2 mt-1">
-                        <i class="fas fa-info-circle text-info"></i>
-                      </div>
-                      <div class="notification-content flex-grow-1">
-                        <div class="notification-title small fw-semibold" x-text="notification.title"></div>
-                        <div class="notification-text small text-muted" x-text="notification.content"></div>
-                        <div class="notification-time small text-muted mt-1" x-text="formatTime(notification.date)"></div>
-                      </div>
-                    </div>
-                  </template>
-                  
-                  <div class="text-center mt-3">
-                    <a href="{{ url_for('views.notifications') }}" class="btn btn-outline-primary btn-sm rounded-pill" @click="markAllNotificationsAsRead()">
-                      <i class="fas fa-bell me-1"></i>
-                      {% trans %}View All{% endtrans %}
-                    </a>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Activity Tab Content -->
-              <div x-show="activeTab === 'activity'" x-transition>
-                <div x-show="recentSolves.length === 0" class="text-center text-muted py-3">
-                  <i class="fas fa-chart-line mb-2" style="font-size: 2rem; opacity: 0.3;"></i>
-                  <p class="mb-0 small">{% trans %}No recent activity{% endtrans %}</p>
-                </div>
-                
-                <div x-show="recentSolves.length > 0">
-                  <template x-for="solve in recentSolves.slice(0, 5)" :key="solve.id">
-                    <div class="activity-item d-flex align-items-center mb-3 pb-2 border-bottom">
-                      <div class="activity-icon me-2">
-                        <i class="fas fa-flag text-success"></i>
-                      </div>
-                      <div class="activity-content flex-grow-1">
-                        <div class="activity-user small fw-semibold" x-text="solve.user"></div>
-                        <div class="activity-challenge small text-muted">
-                          {% trans %}solved{% endtrans %} <span x-text="solve.challenge"></span>
-                        </div>
-                        <div class="activity-time small text-muted" x-text="formatTime(solve.date)"></div>
-                      </div>
-                      <div class="activity-points">
-                        <span class="badge bg-primary-subtle text-primary rounded-pill small" x-text="solve.value + ' pts'"></span>
-                      </div>
-                    </div>
-                  </template>
-                  
-                  <div class="text-center mt-3">
-                    <a href="{{ url_for('scoreboard.listing') }}" class="btn btn-outline-success btn-sm rounded-pill">
-                      <i class="fas fa-chart-line me-1"></i>
-                      {% trans %}View Scoreboard{% endtrans %}
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
   </div>
 
-  <style>
+<style>
     /* User Header Styles */
     .user-header {
-      background: linear-gradient(135deg, #007AFF 0%, #5856D6 100%) !important;
-      color: white !important;
-      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+      background: rgba(51, 209, 122, 0.1) !important;
+      border-bottom: 1px solid rgba(51, 209, 122, 0.25) !important;
+      color: var(--apple-text) !important;
     }
 
     [data-bs-theme="dark"] .user-header {
-      background: linear-gradient(135deg, #007AFF 0%, #5856D6 100%) !important;
-      color: white !important;
+      background: rgba(51, 209, 122, 0.08) !important;
+      border-bottom: 1px solid rgba(51, 209, 122, 0.2) !important;
+      color: var(--apple-text) !important;
     }
 
     /* Three Column Layout Styles */
@@ -865,7 +732,7 @@
             this.notifications = [
               {
                 id: 1,
-                title: '{% trans %}Welcome to WMCTF!{% endtrans %}',
+                title: '{% trans %}Welcome to{% endtrans %} ' + '{{ Configs.ctf_name }}',
                 content: '{% trans %}Good luck in the competition!{% endtrans %}',
                 date: new Date().toISOString(),
                 viewed: false

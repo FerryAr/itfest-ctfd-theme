@@ -183,9 +183,11 @@
                   <button
                       id="challenge-submit"
                       class="challenge-submit btn btn-outline-secondary w-100 h-100" type="submit"
+                      :class="{'btn-captured': response && response.data && response.data.status === 'correct'}"
                       @click.debounce.500ms="submitChallenge()"
                   >
-                    {% trans %}Submit{% endtrans %}
+                    <span x-show="response && response.data && response.data.status === 'correct'"><i class="fas fa-check me-1"></i> CAPTURED!</span>
+                    <span x-show="!response || !response.data || response.data.status !== 'correct'">{% trans %}Submit{% endtrans %}</span>
                   </button>
                 {% endblock %}
               </div>
