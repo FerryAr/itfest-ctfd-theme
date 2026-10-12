@@ -163,6 +163,36 @@
               </p>
             </template>
 
+                        <!-- AI Link & Solver File Inputs (Native Render) -->
+            <div class="row g-3 mb-3 ai-solver-grid">
+              <div class="col-12 col-md-6">
+                <label class="form-label small fw-semibold" for="challenge-ai-link" style="color: #1d1d1f; display: flex; align-items: center; gap: 4px; margin-bottom: 6px;">
+                  <i class="fas fa-robot text-success me-1"></i>
+                  <span>AI Link (ChatGPT / Gemini Free)</span>
+                  <span style="color: #ef4444; font-weight: bold;">*</span>
+                </label>
+                <input class="form-control rounded-3 py-2 px-3" type="url" id="challenge-ai-link" name="ai_link" 
+                  placeholder="https://chatgpt.com/share/... atau https://share.gemini.google/..." autocomplete="off" 
+                  style="font-size: 13.5px; border-radius: 12px; background: rgba(0, 0, 0, 0.035); border: 1px solid rgba(0, 0, 0, 0.12);">
+                <small class="form-text text-muted" style="font-size: 11px; color: #86868b; display: block; margin-top: 4px;">
+                  Wajib link share percakapan resmi ChatGPT atau Gemini Free.
+                </small>
+              </div>
+              <div class="col-12 col-md-6">
+                <label class="form-label small fw-semibold" for="challenge-solver-file" style="color: #1d1d1f; display: flex; align-items: center; gap: 4px; margin-bottom: 6px;">
+                  <i class="fas fa-file-code text-primary me-1"></i>
+                  <span>File Solver (.py, .sh, .txt)</span>
+                  <span style="color: #ef4444; font-weight: bold;">*</span>
+                </label>
+                <input class="form-control rounded-3 py-2 px-3" type="file" id="challenge-solver-file" name="solver_file" 
+                  accept=".py,.sh,.txt" 
+                  style="font-size: 13.5px; border-radius: 12px; background: rgba(0, 0, 0, 0.035); border: 1px solid rgba(0, 0, 0, 0.12);">
+                <small class="form-text text-muted" style="font-size: 11px; color: #86868b; display: block; margin-top: 4px;">
+                  Hanya format .py, .sh, atau .txt (maksimal 5MB).
+                </small>
+              </div>
+            </div>
+
             <div class="row submit-row">
               <div class="col-12 col-sm-8">
                 {% block input %}
