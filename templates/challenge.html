@@ -196,18 +196,18 @@
 
             <div class="row notification-row">
               <div class="col-12">
-                <template x-if="response">
+                <template x-if="response && response.data">
                   {# This alert is re-used for all alerts, so it's important not to make it dismissible #}
                   <div class="alert text-center w-100 mt-3"
                       :class="{
-                        'alert-success': response.data.status == 'correct',
-                        'alert-info': response.data.status == 'already_solved',
-                        'alert-danger': response.data.status == 'incorrect',
-                        'alert-warning': response.data.status == 'paused',
+                        'alert-success': response.data?.status == 'correct',
+                        'alert-info': response.data?.status == 'already_solved',
+                        'alert-danger': response.data?.status == 'incorrect',
+                        'alert-warning': response.data?.status == 'paused',
                       }" role="alert"
                   >
-                    <strong x-text="response.data.message"></strong>
-                    <div x-show="(response.data.status == 'correct' || response.data.status == 'already_solved')">
+                    <strong x-text="response.data?.message"></strong>
+                    <div x-show="(response.data?.status == 'correct' || response.data?.status == 'already_solved')">
                       <div x-show="getNextId()">
                         <button @click="nextChallenge()" class="btn btn-info mt-3">
                           {% trans %}Next Challenge{% endtrans %}
