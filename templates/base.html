@@ -38,8 +38,8 @@
           'end': {{ Configs.end | tojson }},
           'themeSettings': {{ Configs.theme_settings | tojson }},
           'eventSounds': [
-            "/themes/core/static/sounds/notification.webm",
-            "/themes/core/static/sounds/notification.mp3",
+            "/themes/itfest-theme/static/sounds/notification.webm",
+            "/themes/itfest-theme/static/sounds/notification.mp3",
           ],
       }
   </script>
@@ -224,6 +224,42 @@
 
 {{ Plugins.scripts }}
   <script src="/plugins/ai_submissions/assets/ai_submissions.js?v={{ Session.nonce }}"></script>
+
+
+<audio id="ctf-bgm" loop preload="auto">
+  <source src="/themes/itfest-theme/static/sounds/bgm.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+(function() {
+  const bgm = document.getElementById('ctf-bgm');
+  if (bgm) {
+    bgm.volume = 0.50; // Statis 50%
+
+    // Pertahankan posisi detik lagu saat pindah halaman
+    const savedTime = sessionStorage.getItem('bgm_time');
+    if (savedTime) {
+      bgm.currentTime = parseFloat(savedTime);
+    }
+
+    setInterval(() => {
+      if (!bgm.paused) {
+        sessionStorage.setItem('bgm_time', bgm.currentTime);
+      }
+    }, 1000);
+
+    const startAudio = () => {
+      bgm.play().then(() => {
+        document.removeEventListener('click', startAudio);
+        document.removeEventListener('keydown', startAudio);
+      }).catch(() => {});
+    };
+
+    document.addEventListener('click', startAudio);
+    document.addEventListener('keydown', startAudio);
+  }
+})();
+</script>
 
 {{ Configs.theme_footer }}
 </body>
