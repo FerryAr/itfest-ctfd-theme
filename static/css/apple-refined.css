@@ -1335,3 +1335,58 @@ body {
   line-height: 1.65 !important;
   color: #374151 !important;
 }
+
+
+/* ==============================================================================
+   FORCE LIGHT THEME & BULLETPROOF NAVBAR VISIBILITY
+   ============================================================================== */
+:root, [data-bs-theme="dark"], [data-bs-theme="light"] {
+  --light-text: #1d1d1f !important;
+  --dark-text: #1d1d1f !important;
+}
+
+.navbar, nav.navbar,
+[data-bs-theme="dark"] .navbar,
+[data-bs-theme="dark"] nav.navbar,
+[data-bs-theme="light"] .navbar,
+[data-bs-theme="light"] nav.navbar {
+  background-color: #ffffff !important;
+  background-image: none !important;
+}
+
+.navbar .nav-link,
+[data-bs-theme="dark"] .navbar .nav-link,
+[data-bs-theme="light"] .navbar .nav-link {
+  color: #6e6e73 !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+.navbar .nav-link:hover,
+[data-bs-theme="dark"] .navbar .nav-link:hover,
+[data-bs-theme="light"] .navbar .nav-link:hover {
+  color: #1d1d1f !important;
+  background: rgba(0, 0, 0, 0.05) !important;
+}
+
+.navbar .nav-link.active,
+[data-bs-theme="dark"] .navbar .nav-link.active,
+[data-bs-theme="light"] .navbar .nav-link.active {
+  color: #1d1d1f !important;
+  background: rgba(0, 0, 0, 0.06) !important;
+  font-weight: 600 !important;
+}
+
+.nav-btn-register,
+[data-bs-theme="dark"] .nav-btn-register,
+[data-bs-theme="light"] .nav-btn-register {
+  color: #6e6e73 !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+.nav-btn-register:hover,
+[data-bs-theme="dark"] .nav-btn-register:hover,
+[data-bs-theme="light"] .nav-btn-register:hover {
+  color: #1d1d1f !important;
+}

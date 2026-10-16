@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html data-bs-theme="light">
 <head>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -18,7 +18,10 @@
 
   {{ Plugins.styles }}
 
-  {{ Assets.js("assets/js/color_mode_switcher.js", type=None) }}
+  <script>
+    document.documentElement.setAttribute("data-bs-theme", "light");
+    try { localStorage.setItem("theme", "light"); } catch(e) {}
+  </script>
 
   <script type="text/javascript">
       window.init = {
