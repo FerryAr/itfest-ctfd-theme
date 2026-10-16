@@ -13,7 +13,11 @@
               {% trans %}Welcome to{% endtrans %} <strong>{{ Configs.ctf_name }}</strong>!
             </p>
             <p class="text-muted small mt-1">
-              {% trans %}In order to participate you must either join or create a team.{% endtrans %}
+              {% if Configs.team_creation == 'false' or Configs.team_creation == False %}
+                {% trans %}In order to participate you must join an existing team.{% endtrans %}
+              {% else %}
+                {% trans %}In order to participate you must either join or create a team.{% endtrans %}
+              {% endif %}
             </p>
           </div>
 
@@ -24,16 +28,18 @@
               </a>
             </div>
             <div class="row g-2">
-              <div class="col-6">
+              <div class="{% if Configs.team_creation == 'false' or Configs.team_creation == False %}col-12{% else %}col-6{% endif %}">
                 <a class="btn btn-outline-secondary w-100 py-2" href="{{ url_for('teams.join') }}">
                   {% trans %}Join Team{% endtrans %}
                 </a>
               </div>
+              {% if Configs.team_creation != 'false' and Configs.team_creation != False %}
               <div class="col-6">
                 <a class="btn btn-outline-secondary w-100 py-2" href="{{ url_for('teams.new') }}">
                   {% trans %}Create Team{% endtrans %}
                 </a>
               </div>
+              {% endif %}
             </div>
           {% else %}
             <div class="d-flex flex-column flex-sm-row gap-3 justify-content-center mt-3">
@@ -41,10 +47,12 @@
                 <i class="fas fa-sign-in-alt me-1"></i>
                 {% trans %}Join Team{% endtrans %}
               </a>
+              {% if Configs.team_creation != 'false' and Configs.team_creation != False %}
               <a class="btn btn-primary flex-fill py-2" href="{{ url_for('teams.new') }}">
                 <i class="fas fa-plus me-1"></i>
                 {% trans %}Create Team{% endtrans %}
               </a>
+              {% endif %}
             </div>
           {% endif %}
         </div>

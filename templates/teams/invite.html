@@ -18,9 +18,11 @@
         <p class="text-center">
           {% trans %}Click the button below to join the team!{% endtrans %}
           <br>
+          {% if Configs.team_creation != 'false' and Configs.team_creation != False %}
           <small class="text-muted">
             Or <a href="{{ url_for('teams.new') }}">click here</a> if you'd prefer to create your own team.
           </small>
+          {% endif %}
         </p>
 
         {% with form = Forms.teams.TeamInviteJoinForm() %}
