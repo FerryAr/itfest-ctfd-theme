@@ -125,8 +125,8 @@
 
       <!-- Challenge Completion Matrix -->
       <div class="row mb-4" x-show="standings.length" x-data="ChallengeMatrix" x-init="loadChallengeData()">
-        <div class="col-12">
-          <div class="card border-0 shadow-sm rounded-3">
+        <div class="col-12" style="min-width: 0 !important; max-width: 100% !important;">
+          <div class="card border-0 shadow-sm rounded-3 matrix-card">
             <div class="card-header bg-light border-0 py-3">
               <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3">
                 <h5 class="card-title mb-0 fw-bold">
@@ -141,7 +141,7 @@
                     class="btn btn-sm rounded-pill px-3 py-1 fw-semibold text-nowrap"
                     :class="selectedCategory === 'all' ? 'btn-primary' : 'btn-outline-secondary'"
                     @click="selectedCategory = 'all'"
-                    style="font-size: 12px;"
+                    style="font-size: 12.5px;"
                   >
                     All (<span x-text="challenges.length"></span>)
                   </button>
@@ -151,7 +151,7 @@
                       class="btn btn-sm rounded-pill px-3 py-1 fw-semibold text-nowrap"
                       :class="selectedCategory === cat ? 'btn-primary' : 'btn-outline-secondary'"
                       @click="selectedCategory = cat"
-                      style="font-size: 12px;"
+                      style="font-size: 12.5px;"
                     >
                       <span x-text="cat"></span> (<span x-text="challengesByCategory[cat].length"></span>)
                     </button>
@@ -160,8 +160,8 @@
               </div>
             </div>
 
-            <div class="card-body p-0">
-              <div class="matrix-scroll-container">
+            <div class="card-body p-0 matrix-card-body">
+              <div class="matrix-scroll-wrapper">
                 <table class="table table-sm align-middle mb-0 challenge-matrix">
                   <thead>
                     <!-- Category Headers Row -->
@@ -183,12 +183,12 @@
                       </template>
                     </tr>
                     
-                    <!-- Challenge Headers Row -->
+                    <!-- Challenge Headers Row (Widened for Comfort) -->
                     <tr class="challenge-row">
                       <template x-for="challenge in displayChallenges" :key="challenge.id">
                         <th class="text-center challenge-header" :style="getCategoryStyle(challenge.category)" :title="challenge.name + ' (' + challenge.value + ' pts)'">
-                          <div class="challenge-name small" x-text="challenge.name"></div>
-                          <div class="challenge-points small" x-text="challenge.value + 'p'"></div>
+                          <div class="challenge-name" x-text="challenge.name"></div>
+                          <div class="challenge-points" x-text="challenge.value + ' pts'"></div>
                         </th>
                       </template>
                     </tr>
@@ -408,144 +408,175 @@
       background: var(--dark-surface);
     }
 
-                /* Challenge Matrix Styles */
+                    /* Challenge Matrix Styles */
+    .matrix-card {
+      min-width: 0 !important;
+      max-width: 100% !important;
+      overflow: visible !important;
+    }
+
+    .matrix-card-body {
+      min-width: 0 !important;
+      max-width: 100% !important;
+      overflow: hidden !important;
+      border-radius: 0 0 16px 16px;
+    }
+
     .category-pills-bar {
       overflow-x: auto;
       max-width: 100%;
       padding-bottom: 2px;
-      scrollbar-width: none; /* Firefox */
-      -ms-overflow-style: none; /* IE/Edge */
+      scrollbar-width: none;
+      -ms-overflow-style: none;
     }
 
     .category-pills-bar::-webkit-scrollbar {
-      display: none; /* Chrome/Safari */
+      display: none;
     }
 
-    .matrix-scroll-container {
+    /* Reliable Viewport-Contained Horizontal Scroll Container */
+    .matrix-scroll-wrapper {
       overflow-x: auto !important;
+      overflow-y: hidden !important;
       -webkit-overflow-scrolling: touch;
-      max-width: 100%;
+      width: 100% !important;
+      max-width: 100% !important;
       position: relative;
       display: block;
       scrollbar-width: thin;
+      scrollbar-color: rgba(0, 0, 0, 0.25) transparent;
     }
 
-    .matrix-scroll-container::-webkit-scrollbar {
-      height: 9px;
+    .matrix-scroll-wrapper::-webkit-scrollbar {
+      height: 10px;
     }
 
-    .matrix-scroll-container::-webkit-scrollbar-thumb {
-      background: rgba(0, 0, 0, 0.2);
+    .matrix-scroll-wrapper::-webkit-scrollbar-track {
+      background: rgba(0, 0, 0, 0.03);
+    }
+
+    .matrix-scroll-wrapper::-webkit-scrollbar-thumb {
+      background: rgba(0, 0, 0, 0.22);
       border-radius: 6px;
     }
 
+    .matrix-scroll-wrapper::-webkit-scrollbar-thumb:hover {
+      background: rgba(0, 0, 0, 0.35);
+    }
+
     .challenge-matrix {
-      font-size: 0.82rem;
+      font-size: 0.84rem;
       border-collapse: separate;
       border-spacing: 0;
       width: max-content !important;
       min-width: 100%;
+      margin: 0 !important;
     }
 
-    /* Proportional Sticky Left Columns (Rank, Team, Score) */
+    /* Proportional & Balanced Sticky Left Columns */
     .challenge-matrix .sticky-col-rank {
       position: sticky;
       left: 0;
-      width: 44px;
-      min-width: 44px;
-      max-width: 44px;
+      width: 42px;
+      min-width: 42px;
+      max-width: 42px;
       z-index: 10;
       background: #ffffff !important;
-      border-right: 1px solid rgba(0, 0, 0, 0.06);
-      padding: 8px 4px !important;
+      border-right: 1px solid rgba(0, 0, 0, 0.08);
+      padding: 10px 4px !important;
     }
 
     .challenge-matrix .sticky-col-team {
       position: sticky;
-      left: 44px;
-      width: 160px;
-      min-width: 160px;
-      max-width: 160px;
+      left: 42px;
+      width: 140px;
+      min-width: 140px;
+      max-width: 140px;
       z-index: 10;
       background: #ffffff !important;
-      border-right: 1px solid rgba(0, 0, 0, 0.06);
-      padding: 8px 10px !important;
+      border-right: 1px solid rgba(0, 0, 0, 0.08);
+      padding: 10px 10px !important;
     }
 
     .challenge-matrix .sticky-col-score {
       position: sticky;
-      left: 204px;
-      width: 74px;
-      min-width: 74px;
-      max-width: 74px;
+      left: 182px;
+      width: 68px;
+      min-width: 68px;
+      max-width: 68px;
       z-index: 10;
       background: #ffffff !important;
-      border-right: 2px solid rgba(0, 0, 0, 0.12) !important;
-      box-shadow: 4px 0 8px -3px rgba(0, 0, 0, 0.06);
-      padding: 8px 6px !important;
+      border-right: 2px solid rgba(0, 0, 0, 0.15) !important;
+      box-shadow: 4px 0 8px -2px rgba(0, 0, 0, 0.07);
+      padding: 10px 6px !important;
     }
 
     thead .sticky-col-rank,
     thead .sticky-col-team,
     thead .sticky-col-score {
-      z-index: 20 !important;
+      z-index: 25 !important;
     }
 
     .category-header {
-      padding: 8px 6px !important;
+      padding: 10px 8px !important;
       font-weight: 700;
-      font-size: 11.5px;
+      font-size: 12px;
       letter-spacing: 0.03em;
       border-bottom: 2px solid rgba(255, 255, 255, 0.3);
       border-left: 1px solid rgba(255, 255, 255, 0.2);
     }
 
-    /* Proportional Challenge Columns (74px) */
+    /* Lebar Kolom Challenge Luas, Lega & Nyaman Dibaca */
     .challenge-header {
-      padding: 8px 4px !important;
-      width: 74px;
-      min-width: 74px;
-      max-width: 74px;
+      padding: 10px 8px !important;
+      width: 110px;
+      min-width: 110px;
+      max-width: 110px;
       vertical-align: middle;
-      border-left: 1px solid rgba(0, 0, 0, 0.05);
-      border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+      border-left: 1px solid rgba(0, 0, 0, 0.06);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.1);
     }
 
     .challenge-name {
-      font-size: 11px;
+      font-size: 11.5px;
       font-weight: 600;
-      line-height: 1.25;
-      max-width: 66px;
+      line-height: 1.3;
+      max-width: 96px;
+      word-wrap: break-word;
+      white-space: normal;
+      margin: 0 auto 4px auto;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
       overflow: hidden;
       text-overflow: ellipsis;
-      white-space: nowrap;
-      margin-bottom: 2px;
     }
 
     .challenge-points {
       font-size: 10px !important;
-      opacity: 0.85;
-      font-weight: 600;
+      font-weight: 700;
+      opacity: 0.9;
     }
 
     .challenge-cell {
-      padding: 8px 4px !important;
-      width: 74px;
-      min-width: 74px;
-      max-width: 74px;
+      padding: 10px 8px !important;
+      width: 110px;
+      min-width: 110px;
+      max-width: 110px;
       vertical-align: middle;
       border-left: 1px solid rgba(0, 0, 0, 0.05);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.05);
     }
 
     .solve-indicator {
-      width: 24px;
-      height: 24px;
+      width: 26px;
+      height: 26px;
       display: flex;
       align-items: center;
       justify-content: center;
       border-radius: 50%;
       margin: 0 auto;
-      font-size: 0.8rem;
+      font-size: 0.85rem;
       transition: all 0.2s ease;
     }
 
@@ -719,7 +750,7 @@
         }
       }));
       
-            // ChallengeMatrix Alpine component for matrix view
+                  // ChallengeMatrix Alpine component for matrix view
       Alpine.data('ChallengeMatrix', () => ({
         challenges: [],
         challengesByCategory: {},
@@ -788,7 +819,6 @@
         },
         
         async loadSolveData() {
-          // Parallel fetch to load all solves quickly
           const promises = this.challenges.map(challenge => 
             CTFd.fetch(`/api/v1/challenges/${challenge.id}/solves`)
               .then(r => r.ok ? r.json() : null)
@@ -803,31 +833,35 @@
         },
 
         getCategoryHeaderStyle(category) {
-          const cat = category.toLowerCase();
-          const map = {
-            'web': 'background: linear-gradient(180deg, #f0f9ff 0%, #e0f2fe 100%) !important; color: #0369a1 !important; border-top: 3px solid #0284c7 !important; border-bottom: 1px solid #bae6fd !important;',
-            'crypto': 'background: linear-gradient(180deg, #faf5ff 0%, #f3e8ff 100%) !important; color: #6b21a8 !important; border-top: 3px solid #9333ea !important; border-bottom: 1px solid #e9d5ff !important;',
-            'pwn': 'background: linear-gradient(180deg, #fff1f2 0%, #ffe4e6 100%) !important; color: #be123c !important; border-top: 3px solid #e11d48 !important; border-bottom: 1px solid #fecdd3 !important;',
-            'reverse': 'background: linear-gradient(180deg, #ecfdf5 0%, #d1fae5 100%) !important; color: #047857 !important; border-top: 3px solid #059669 !important; border-bottom: 1px solid #a7f3d0 !important;',
-            'forensics': 'background: linear-gradient(180deg, #fffbeb 0%, #fef3c7 100%) !important; color: #b45309 !important; border-top: 3px solid #d97706 !important; border-bottom: 1px solid #fde68a !important;',
-            'misc': 'background: linear-gradient(180deg, #f0fdfa 0%, #ccfbf1 100%) !important; color: #0f766e !important; border-top: 3px solid #0d9488 !important; border-bottom: 1px solid #99f6e4 !important;'
-          };
-          return map[cat] || 'background: #f8fafc !important; color: #334155 !important; border-top: 3px solid #64748b !important; border-bottom: 1px solid #e2e8f0 !important;';
+          const cat = (category || '').toLowerCase();
+          if (cat.includes('web')) {
+            return 'background: linear-gradient(180deg, #0284c7 0%, #0369a1 100%) !important; color: #ffffff !important;';
+          }
+          if (cat.includes('crypto')) {
+            return 'background: linear-gradient(180deg, #9333ea 0%, #7e22ce 100%) !important; color: #ffffff !important;';
+          }
+          if (cat.includes('pwn') || cat.includes('binary')) {
+            return 'background: linear-gradient(180deg, #e11d48 0%, #be123c 100%) !important; color: #ffffff !important;';
+          }
+          if (cat.includes('rev')) {
+            return 'background: linear-gradient(180deg, #059669 0%, #047857 100%) !important; color: #ffffff !important;';
+          }
+          if (cat.includes('forensic')) {
+            return 'background: linear-gradient(180deg, #d97706 0%, #b45309 100%) !important; color: #ffffff !important;';
+          }
+          return 'background: linear-gradient(180deg, #475569 0%, #334155 100%) !important; color: #ffffff !important;';
         },
         
         getCategoryStyle(category) {
-          const cat = category.toLowerCase();
-          const map = {
-            'web': 'background: #f8fafc !important; color: #0284c7 !important;',
-            'crypto': 'background: #faf8fc !important; color: #7c3aed !important;',
-            'pwn': 'background: #fcf8f8 !important; color: #e11d48 !important;',
-            'reverse': 'background: #f8fcf9 !important; color: #059669 !important;',
-            'forensics': 'background: #fcfbf8 !important; color: #d97706 !important;',
-            'misc': 'background: #f8fcfb !important; color: #0d9488 !important;'
-          };
-          return map[cat] || 'background: #ffffff !important; color: #475569 !important;';
+          const cat = (category || '').toLowerCase();
+          if (cat.includes('web')) return 'background: #f0f9ff !important; color: #0369a1 !important;';
+          if (cat.includes('crypto')) return 'background: #faf5ff !important; color: #6b21a8 !important;';
+          if (cat.includes('pwn') || cat.includes('binary')) return 'background: #fff1f2 !important; color: #be123c !important;';
+          if (cat.includes('rev')) return 'background: #ecfdf5 !important; color: #047857 !important;';
+          if (cat.includes('forensic')) return 'background: #fffbeb !important; color: #b45309 !important;';
+          return 'background: #f8fafc !important; color: #334155 !important;';
         },
-        
+
         getSolveStatus(standing, challenge) {
           const solves = this.solveData[challenge.id];
           if (!solves || solves.length === 0) return 'unsolved';
