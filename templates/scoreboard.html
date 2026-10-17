@@ -127,29 +127,54 @@
       <div class="row mb-4" x-show="standings.length" x-data="ChallengeMatrix" x-init="loadChallengeData()">
         <div class="col-12">
           <div class="card border-0 shadow-sm rounded-3 overflow-hidden">
-            <div class="card-header bg-light border-0 py-3">
+            <div class="card-header bg-light border-0 py-3 d-flex flex-wrap justify-content-between align-items-center gap-2">
               <h5 class="card-title mb-0 fw-bold">
                 <i class="fas fa-table me-2 text-primary"></i>
                 {% trans %}Challenge Completion Matrix{% endtrans %}
               </h5>
+
+              <!-- Category Filter Pills -->
+              <div class="d-flex flex-wrap gap-1 align-items-center">
+                <button 
+                  type="button" 
+                  class="btn btn-sm rounded-pill px-3 py-1 fw-500"
+                  :class="selectedCategory === 'all' ? 'btn-primary' : 'btn-outline-secondary'"
+                  @click="selectedCategory = 'all'"
+                  style="font-size: 12px;"
+                >
+                  All (<span x-text="challenges.length"></span>)
+                </button>
+                <template x-for="cat in Object.keys(challengesByCategory).sort()" :key="cat">
+                  <button 
+                    type="button" 
+                    class="btn btn-sm rounded-pill px-3 py-1 fw-500"
+                    :class="selectedCategory === cat ? 'btn-primary' : 'btn-outline-secondary'"
+                    @click="selectedCategory = cat"
+                    style="font-size: 12px;"
+                  >
+                    <span x-text="cat"></span> (<span x-text="challengesByCategory[cat].length"></span>)
+                  </button>
+                </template>
+              </div>
             </div>
+
             <div class="card-body p-0">
-              <div class="table-responsive">
+              <div class="table-responsive matrix-scroll-container">
                 <table class="table table-sm align-middle mb-0 challenge-matrix">
                   <thead>
                     <!-- Category Headers Row -->
                     <tr class="category-row">
-                      <th class="sticky-left text-center fw-bold" style="width: 50px; background: #ffffff !important; color: #1d1d1f !important;" rowspan="2">
+                      <th class="sticky-col-rank text-center fw-bold" rowspan="2">
                         <span class="small">#</span>
                       </th>
-                      <th class="sticky-left fw-bold" style="width: 140px; background: #ffffff !important; color: #1d1d1f !important;" rowspan="2">
+                      <th class="sticky-col-team fw-bold" rowspan="2">
                         {{ get_mode_as_word(capitalize=True) }}
                       </th>
-                      <th class="text-center fw-bold" style="width: 90px; background: #ffffff !important; color: #1d1d1f !important;" rowspan="2">
+                      <th class="sticky-col-score text-center fw-bold" rowspan="2">
                         {% trans %}Score{% endtrans %}
                       </th>
                       <!-- Category group headers -->
-                      <template x-for="category in Object.keys(challengesByCategory).sort()" :key="category">
+                      <template x-for="category in filteredCategories" :key="category">
                         <th class="text-center category-header text-white fw-bold" :colspan="challengesByCategory[category].length" :style="getCategoryHeaderStyle(category)">
                           <span x-text="category.toUpperCase()"></span>
                         </th>
@@ -158,21 +183,19 @@
                     
                     <!-- Challenge Headers Row -->
                     <tr class="challenge-row">
-                      <!-- Challenge columns by category -->
-                      <template x-for="challenge in sortedChallenges" :key="challenge.id">
-                        <th class="text-center challenge-header text-white" style="width: 80px; min-width: 80px;" :style="getCategoryStyle(challenge.category)">
-                          <div class="challenge-name small fw-bold mb-1" x-text="challenge.name" :title="challenge.name"></div>
-                          <div class="challenge-points small" x-text="challenge.value + ' pts'" style="opacity: 0.8;"></div>
-                          <div class="challenge-category small" x-text="challenge.category.toUpperCase()" style="opacity: 0.6; font-size: 0.6rem;"></div>
+                      <template x-for="challenge in displayChallenges" :key="challenge.id">
+                        <th class="text-center challenge-header" :style="getCategoryStyle(challenge.category)" :title="challenge.name + ' (' + challenge.value + ' pts)'">
+                          <div class="challenge-name small fw-bold" x-text="challenge.name"></div>
+                          <div class="challenge-points small fw-semibold" x-text="challenge.value + 'p'"></div>
                         </th>
                       </template>
                     </tr>
                   </thead>
                   <tbody>
-                    <template x-for="(standing, index) in standings.filter(i => activeBracket ? i.bracket_id==activeBracket : true).slice(0, 20)" :key="standing.account_id">
+                    <template x-for="(standing, index) in standings.filter(i => activeBracket ? i.bracket_id==activeBracket : true)" :key="standing.account_id">
                       <tr class="scoreboard-row" :class="{'top-performer': index < 3, 'my-team-row': (window.init && (window.init.userMode === 'teams' ? window.init.teamId : window.init.userId) === standing.account_id)}">
                         <!-- Rank -->
-                        <td class="sticky-left text-center">
+                        <td class="sticky-col-rank text-center">
                           <div class="rank-badge-small" :class="{
                             'rank-1': index === 0,
                             'rank-2': index === 1,
@@ -194,18 +217,18 @@
                         </td>
 
                         <!-- Team Name -->
-                        <td class="sticky-left">
-                          <a :href="standing.account_url" class="text-decoration-none fw-semibold small" x-text="standing.name"></a>
+                        <td class="sticky-col-team">
+                          <a :href="standing.account_url" class="text-decoration-none fw-semibold small text-truncate d-block" :title="standing.name" x-text="standing.name"></a>
                         </td>
 
                         <!-- Score -->
-                        <td class="text-center sticky-left">
-                          <span class="fw-bold small" x-text="standing.score"></span>
+                        <td class="sticky-col-score text-center">
+                          <span class="fw-bold small text-primary" x-text="standing.score"></span>
                         </td>
 
                         <!-- Challenge completion status -->
-                        <template x-for="challenge in sortedChallenges" :key="challenge.id">
-                          <td class="text-center challenge-cell">
+                        <template x-for="challenge in displayChallenges" :key="challenge.id">
+                          <td class="text-center challenge-cell" :title="standing.name + ' - ' + challenge.name">
                             <div class="solve-indicator" :class="{
                               'solved': getSolveStatus(standing, challenge) === 'solved',
                               'first-blood': getSolveStatus(standing, challenge) === 'first',
@@ -383,88 +406,143 @@
       background: var(--dark-surface);
     }
 
-    /* Challenge Matrix Styles */
-    .challenge-matrix {
-      font-size: 0.85rem;
+        /* Challenge Matrix Styles */
+    .matrix-scroll-container {
+      overflow-x: auto;
+      max-width: 100%;
+      position: relative;
+      scrollbar-width: thin;
     }
 
-    .challenge-matrix .sticky-left {
+    .matrix-scroll-container::-webkit-scrollbar {
+      height: 8px;
+    }
+
+    .matrix-scroll-container::-webkit-scrollbar-thumb {
+      background: rgba(0, 0, 0, 0.15);
+      border-radius: 4px;
+    }
+
+    .challenge-matrix {
+      font-size: 0.82rem;
+      border-collapse: separate;
+      border-spacing: 0;
+    }
+
+    /* Fixed Independent Sticky Columns (No Overlapping) */
+    .challenge-matrix .sticky-col-rank {
       position: sticky;
       left: 0;
+      width: 44px;
+      min-width: 44px;
+      max-width: 44px;
       z-index: 10;
-      box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-      background: white !important;
+      background: #ffffff !important;
+      border-right: 1px solid rgba(0, 0, 0, 0.06);
+    }
+
+    .challenge-matrix .sticky-col-team {
+      position: sticky;
+      left: 44px;
+      width: 140px;
+      min-width: 140px;
+      max-width: 140px;
+      z-index: 10;
+      background: #ffffff !important;
+      border-right: 1px solid rgba(0, 0, 0, 0.06);
+    }
+
+    .challenge-matrix .sticky-col-score {
+      position: sticky;
+      left: 184px;
+      width: 76px;
+      min-width: 76px;
+      max-width: 76px;
+      z-index: 10;
+      background: #ffffff !important;
+      border-right: 2px solid rgba(0, 0, 0, 0.12) !important;
+      box-shadow: 3px 0 6px -2px rgba(0, 0, 0, 0.05);
+    }
+
+    thead .sticky-col-rank,
+    thead .sticky-col-team,
+    thead .sticky-col-score {
+      z-index: 20 !important;
     }
 
     .category-header {
-      padding: 12px 8px !important;
+      padding: 8px 6px !important;
       font-weight: 700;
+      font-size: 11px;
+      letter-spacing: 0.03em;
       border-bottom: 2px solid rgba(255, 255, 255, 0.3);
       border-left: 1px solid rgba(255, 255, 255, 0.2);
     }
 
     .challenge-header {
-      padding: 8px 6px !important;
-      min-height: 60px;
+      padding: 6px 2px !important;
+      width: 46px;
+      min-width: 46px;
+      max-width: 46px;
       vertical-align: middle;
-      border-left: 1px solid rgba(255, 255, 255, 0.2);
+      border-left: 1px solid rgba(0, 0, 0, 0.05);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.08);
     }
 
     .challenge-name {
-      max-width: 70px;
+      font-size: 10px;
+      line-height: 1.1;
+      max-width: 44px;
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
-      line-height: 1.2;
+      margin-bottom: 2px;
     }
 
     .challenge-points {
-      font-size: 0.7rem !important;
-      opacity: 0.9;
+      font-size: 9.5px !important;
+      opacity: 0.85;
     }
 
     .challenge-cell {
-      padding: 8px 4px !important;
+      padding: 6px 2px !important;
+      width: 46px;
+      min-width: 46px;
+      max-width: 46px;
       vertical-align: middle;
       border-left: 1px solid rgba(0, 0, 0, 0.05);
     }
 
     .solve-indicator {
-      width: 24px;
-      height: 24px;
+      width: 22px;
+      height: 22px;
       display: flex;
       align-items: center;
       justify-content: center;
       border-radius: 50%;
       margin: 0 auto;
-      font-size: 0.8rem;
-      transition: all 0.3s ease;
+      font-size: 0.75rem;
+      transition: all 0.2s ease;
     }
 
     .solve-indicator.solved {
-      background: rgba(52, 199, 89, 0.1);
-      border: 2px solid var(--wmctf-success);
+      background: rgba(52, 199, 89, 0.15);
+      border: 1.5px solid var(--wmctf-success);
     }
 
     .solve-indicator.first-blood {
-      background: rgba(255, 215, 0, 0.2);
-      border: 2px solid #FFD700;
-      box-shadow: 0 0 8px rgba(255, 215, 0, 0.4);
-      animation: goldPulse 2s ease-in-out infinite;
+      background: rgba(255, 215, 0, 0.25);
+      border: 1.5px solid #FFD700;
     }
 
     .solve-indicator.second-blood {
-      background: rgba(192, 192, 192, 0.2);
-      border: 2px solid #C0C0C0;
-      box-shadow: 0 0 8px rgba(192, 192, 192, 0.4);
-      animation: silverPulse 2.5s ease-in-out infinite;
+      background: rgba(192, 192, 192, 0.25);
+      border: 1.5px solid #C0C0C0;
     }
 
     .solve-indicator.third-blood {
-      background: rgba(205, 127, 50, 0.2);
-      border: 2px solid #CD7F32;
-      box-shadow: 0 0 8px rgba(205, 127, 50, 0.4);
-      animation: bronzePulse 3s ease-in-out infinite;
+      background: rgba(205, 127, 50, 0.25);
+      border: 1.5px solid #CD7F32;
     }
 
     .rank-badge-small {
@@ -617,16 +695,32 @@
         }
       }));
       
-      // ChallengeMatrix Alpine component for matrix view
+            // ChallengeMatrix Alpine component for matrix view
       Alpine.data('ChallengeMatrix', () => ({
         challenges: [],
         challengesByCategory: {},
         sortedChallenges: [],
+        selectedCategory: 'all',
         solveData: {},
         
+        get filteredCategories() {
+          const allCats = Object.keys(this.challengesByCategory).sort();
+          if (this.selectedCategory === 'all') {
+            return allCats;
+          }
+          return allCats.filter(cat => cat.toLowerCase() === this.selectedCategory.toLowerCase());
+        },
+
+        get displayChallenges() {
+          if (this.selectedCategory === 'all') {
+            return this.sortedChallenges;
+          }
+          const cat = this.filteredCategories[0];
+          return cat ? (this.challengesByCategory[cat] || []) : [];
+        },
+
         async loadChallengeData() {
           try {
-            // Get challenges
             const challengesResponse = await CTFd.fetch('/api/v1/challenges');
             if (challengesResponse.ok) {
               const challengesData = await challengesResponse.json();
@@ -637,7 +731,7 @@
               }
             }
             
-            // Get solve data for each challenge
+            // Concurrently load solve data with Promise.all to prevent lag
             await this.loadSolveData();
           } catch (error) {
             console.log('Error loading challenge data:', error);
@@ -652,7 +746,6 @@
             }
             categories[challenge.category].push(challenge);
           });
-          // Sort challenges within each category
           Object.keys(categories).forEach(category => {
             categories[category].sort((a, b) => a.value - b.value);
           });
@@ -660,7 +753,6 @@
         },
         
         createSortedChallenges() {
-          // Create a flat sorted list of challenges grouped by category
           const sortedCategories = Object.keys(this.challengesByCategory).sort();
           this.sortedChallenges = [];
           
@@ -672,22 +764,20 @@
         },
         
         async loadSolveData() {
-          // Load solve data for each challenge to determine first/second/third blood
-          for (const challenge of this.challenges) {
-            try {
-              const response = await CTFd.fetch(`/api/v1/challenges/${challenge.id}/solves`);
-              if (response.ok) {
-                const data = await response.json();
-                if (data.success) {
+          // Parallel fetch to load all solves quickly
+          const promises = this.challenges.map(challenge => 
+            CTFd.fetch(`/api/v1/challenges/${challenge.id}/solves`)
+              .then(r => r.ok ? r.json() : null)
+              .then(data => {
+                if (data && data.success) {
                   this.solveData[challenge.id] = data.data;
                 }
-              }
-            } catch (error) {
-              console.log(`Error loading solves for challenge ${challenge.id}:`, error);
-            }
-          }
+              })
+              .catch(() => {})
+          );
+          await Promise.all(promises);
         },
-        
+
         getCategoryHeaderStyle(category) {
           const cat = category.toLowerCase();
           const map = {
