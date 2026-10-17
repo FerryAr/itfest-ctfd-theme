@@ -126,40 +126,42 @@
       <!-- Challenge Completion Matrix -->
       <div class="row mb-4" x-show="standings.length" x-data="ChallengeMatrix" x-init="loadChallengeData()">
         <div class="col-12">
-          <div class="card border-0 shadow-sm rounded-3 overflow-hidden">
-            <div class="card-header bg-light border-0 py-3 d-flex flex-wrap justify-content-between align-items-center gap-2">
-              <h5 class="card-title mb-0 fw-bold">
-                <i class="fas fa-table me-2 text-primary"></i>
-                {% trans %}Challenge Completion Matrix{% endtrans %}
-              </h5>
+          <div class="card border-0 shadow-sm rounded-3">
+            <div class="card-header bg-light border-0 py-3">
+              <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3">
+                <h5 class="card-title mb-0 fw-bold">
+                  <i class="fas fa-table me-2 text-primary"></i>
+                  {% trans %}Challenge Completion Matrix{% endtrans %}
+                </h5>
 
-              <!-- Category Filter Pills -->
-              <div class="d-flex flex-wrap gap-1 align-items-center">
-                <button 
-                  type="button" 
-                  class="btn btn-sm rounded-pill px-3 py-1 fw-500"
-                  :class="selectedCategory === 'all' ? 'btn-primary' : 'btn-outline-secondary'"
-                  @click="selectedCategory = 'all'"
-                  style="font-size: 12px;"
-                >
-                  All (<span x-text="challenges.length"></span>)
-                </button>
-                <template x-for="cat in Object.keys(challengesByCategory).sort()" :key="cat">
+                <!-- Category Filter Pills with smooth horizontal scroll -->
+                <div class="category-pills-bar d-flex align-items-center gap-1">
                   <button 
                     type="button" 
-                    class="btn btn-sm rounded-pill px-3 py-1 fw-500"
-                    :class="selectedCategory === cat ? 'btn-primary' : 'btn-outline-secondary'"
-                    @click="selectedCategory = cat"
+                    class="btn btn-sm rounded-pill px-3 py-1 fw-semibold text-nowrap"
+                    :class="selectedCategory === 'all' ? 'btn-primary' : 'btn-outline-secondary'"
+                    @click="selectedCategory = 'all'"
                     style="font-size: 12px;"
                   >
-                    <span x-text="cat"></span> (<span x-text="challengesByCategory[cat].length"></span>)
+                    All (<span x-text="challenges.length"></span>)
                   </button>
-                </template>
+                  <template x-for="cat in Object.keys(challengesByCategory).sort()" :key="cat">
+                    <button 
+                      type="button" 
+                      class="btn btn-sm rounded-pill px-3 py-1 fw-semibold text-nowrap"
+                      :class="selectedCategory === cat ? 'btn-primary' : 'btn-outline-secondary'"
+                      @click="selectedCategory = cat"
+                      style="font-size: 12px;"
+                    >
+                      <span x-text="cat"></span> (<span x-text="challengesByCategory[cat].length"></span>)
+                    </button>
+                  </template>
+                </div>
               </div>
             </div>
 
             <div class="card-body p-0">
-              <div class="table-responsive matrix-scroll-container">
+              <div class="matrix-scroll-container">
                 <table class="table table-sm align-middle mb-0 challenge-matrix">
                   <thead>
                     <!-- Category Headers Row -->
@@ -185,8 +187,8 @@
                     <tr class="challenge-row">
                       <template x-for="challenge in displayChallenges" :key="challenge.id">
                         <th class="text-center challenge-header" :style="getCategoryStyle(challenge.category)" :title="challenge.name + ' (' + challenge.value + ' pts)'">
-                          <div class="challenge-name small fw-bold" x-text="challenge.name"></div>
-                          <div class="challenge-points small fw-semibold" x-text="challenge.value + 'p'"></div>
+                          <div class="challenge-name small" x-text="challenge.name"></div>
+                          <div class="challenge-points small" x-text="challenge.value + 'p'"></div>
                         </th>
                       </template>
                     </tr>
@@ -406,65 +408,81 @@
       background: var(--dark-surface);
     }
 
-            /* Challenge Matrix Styles */
-    .matrix-scroll-container {
+                /* Challenge Matrix Styles */
+    .category-pills-bar {
       overflow-x: auto;
       max-width: 100%;
+      padding-bottom: 2px;
+      scrollbar-width: none; /* Firefox */
+      -ms-overflow-style: none; /* IE/Edge */
+    }
+
+    .category-pills-bar::-webkit-scrollbar {
+      display: none; /* Chrome/Safari */
+    }
+
+    .matrix-scroll-container {
+      overflow-x: auto !important;
+      -webkit-overflow-scrolling: touch;
+      max-width: 100%;
       position: relative;
+      display: block;
       scrollbar-width: thin;
     }
 
     .matrix-scroll-container::-webkit-scrollbar {
-      height: 8px;
+      height: 9px;
     }
 
     .matrix-scroll-container::-webkit-scrollbar-thumb {
-      background: rgba(0, 0, 0, 0.15);
-      border-radius: 4px;
+      background: rgba(0, 0, 0, 0.2);
+      border-radius: 6px;
     }
 
     .challenge-matrix {
       font-size: 0.82rem;
       border-collapse: separate;
       border-spacing: 0;
+      width: max-content !important;
+      min-width: 100%;
     }
 
-    /* Compact Sticky Left Columns (Rank, Team, Score) */
+    /* Proportional Sticky Left Columns (Rank, Team, Score) */
     .challenge-matrix .sticky-col-rank {
       position: sticky;
       left: 0;
-      width: 36px;
-      min-width: 36px;
-      max-width: 36px;
+      width: 44px;
+      min-width: 44px;
+      max-width: 44px;
       z-index: 10;
       background: #ffffff !important;
       border-right: 1px solid rgba(0, 0, 0, 0.06);
-      padding: 6px 2px !important;
+      padding: 8px 4px !important;
     }
 
     .challenge-matrix .sticky-col-team {
       position: sticky;
-      left: 36px;
-      width: 110px;
-      min-width: 110px;
-      max-width: 110px;
+      left: 44px;
+      width: 160px;
+      min-width: 160px;
+      max-width: 160px;
       z-index: 10;
       background: #ffffff !important;
       border-right: 1px solid rgba(0, 0, 0, 0.06);
-      padding: 6px 8px !important;
+      padding: 8px 10px !important;
     }
 
     .challenge-matrix .sticky-col-score {
       position: sticky;
-      left: 146px;
-      width: 58px;
-      min-width: 58px;
-      max-width: 58px;
+      left: 204px;
+      width: 74px;
+      min-width: 74px;
+      max-width: 74px;
       z-index: 10;
       background: #ffffff !important;
       border-right: 2px solid rgba(0, 0, 0, 0.12) !important;
-      box-shadow: 3px 0 6px -2px rgba(0, 0, 0, 0.05);
-      padding: 6px 4px !important;
+      box-shadow: 4px 0 8px -3px rgba(0, 0, 0, 0.06);
+      padding: 8px 6px !important;
     }
 
     thead .sticky-col-rank,
@@ -482,12 +500,12 @@
       border-left: 1px solid rgba(255, 255, 255, 0.2);
     }
 
-    /* Lebar Kolom Soal Dibuat Luas & Nyaman Dibaca */
+    /* Proportional Challenge Columns (74px) */
     .challenge-header {
-      padding: 8px 6px !important;
-      width: 96px;
-      min-width: 96px;
-      max-width: 96px;
+      padding: 8px 4px !important;
+      width: 74px;
+      min-width: 74px;
+      max-width: 74px;
       vertical-align: middle;
       border-left: 1px solid rgba(0, 0, 0, 0.05);
       border-bottom: 1px solid rgba(0, 0, 0, 0.08);
@@ -497,11 +515,11 @@
       font-size: 11px;
       font-weight: 600;
       line-height: 1.25;
-      max-width: 88px;
+      max-width: 66px;
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
-      margin-bottom: 3px;
+      margin-bottom: 2px;
     }
 
     .challenge-points {
@@ -511,10 +529,10 @@
     }
 
     .challenge-cell {
-      padding: 8px 6px !important;
-      width: 96px;
-      min-width: 96px;
-      max-width: 96px;
+      padding: 8px 4px !important;
+      width: 74px;
+      min-width: 74px;
+      max-width: 74px;
       vertical-align: middle;
       border-left: 1px solid rgba(0, 0, 0, 0.05);
     }
